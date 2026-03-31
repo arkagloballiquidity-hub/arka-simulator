@@ -17,28 +17,61 @@
   --w:#ffffff;--off:#e8eaed;--off2:#b8bcc4;--m:#72787f;--md:#4a4f56;
   --gr:#4ade80;--gold:#c8a85a;--gold-d:rgba(200,168,90,0.08);--gold-b:rgba(200,168,90,0.22);
   --sans:'Montserrat',sans-serif;
+  --nav-bg:rgba(0,0,0,0.96);
 }
+
+/* ── LIGHT MODE ─────────────────────────────────────── */
+body.light{
+  --bg:#f5f6f8;--c1:#ffffff;--c2:#f0f1f3;
+  --b1:rgba(0,0,0,0.08);--b2:rgba(0,0,0,0.13);
+  --w:#0d0f11;--off:#1a1d21;--off2:#4a4f56;--m:#8a9099;--md:#c0c5cc;
+  --td:rgba(0,148,142,0.07);--tb:rgba(0,186,179,0.18);
+  --gold-d:rgba(200,168,90,0.1);--gold-b:rgba(200,168,90,0.3);
+  --nav-bg:rgba(255,255,255,0.96);
+  --gr:#16a34a;
+}
+body.light nav{background:var(--nav-bg);border-bottom:1px solid var(--b1)}
+body.light .nn{color:var(--w)}
+body.light .card::before{opacity:.15}
+body.light .lw::before{opacity:.25}
+body.light input[type=text],body.light input[type=email],body.light input[type=tel],body.light select{
+  background:var(--c1);border-color:var(--b2);color:var(--w)}
+body.light input[type=range]{background:var(--b2)}
+body.light .lang-sw{background:var(--c2);border-color:var(--b2)}
+body.light .theme-btn{color:var(--m)}
+body.light .ed-left{border-color:var(--b1)}
+body.light .ed-right{border-color:var(--b1)}
+body.light .cw{background:var(--c2);border-color:var(--b1)}
+body.light .succ{background:rgba(22,163,74,0.06)}
+body.light .disc{background:rgba(0,0,0,0.04);border-color:var(--b2)}
+body.light footer{border-color:var(--b1)}
+
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--off);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--off);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.96);
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
   backdrop-filter:blur(20px);border-bottom:1px solid var(--b1);height:60px;
-  display:flex;align-items:center;padding:0 40px;justify-content:space-between}
+  display:flex;align-items:center;padding:0 40px;justify-content:space-between;transition:background .3s}
 .nl{display:flex;align-items:center;gap:14px}
 .nlogo{width:32px;height:32px;object-fit:contain}
-.nn{font-size:.82rem;font-weight:700;letter-spacing:.07em;color:var(--w)}
+.nn{font-size:.82rem;font-weight:700;letter-spacing:.07em;color:var(--w);transition:color .3s}
 .ns{font-size:.57rem;font-weight:400;letter-spacing:.18em;color:var(--m);text-transform:uppercase;display:block}
 .nibc{font-size:.62rem;color:var(--m);border:1px solid var(--b1);padding:3px 10px;border-radius:3px}
 .nm{font-size:.7rem;color:var(--m);text-decoration:none;transition:color .2s}
 .nm:hover{color:var(--tl)}
 .nav-right{display:flex;align-items:center;gap:14px}
 /* Language toggle */
-.lang-sw{display:flex;background:var(--c2);border:1px solid var(--b1);border-radius:5px;overflow:hidden}
+.lang-sw{display:flex;background:var(--c2);border:1px solid var(--b1);border-radius:5px;overflow:hidden;transition:background .3s}
 .lang-btn{padding:5px 10px;font-size:.62rem;font-weight:700;letter-spacing:.08em;
   cursor:pointer;border:none;background:transparent;color:var(--m);
   font-family:var(--sans);transition:all .15s}
-.lang-btn.active{background:var(--t);color:var(--w)}
+.lang-btn.active{background:var(--t);color:#fff}
+/* Theme toggle */
+.theme-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--b1);
+  background:var(--c2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;transition:all .2s;color:var(--off2)}
+.theme-btn:hover{border-color:var(--tl);background:var(--td)}
 
 /* PAGE */
 .pg{max-width:1080px;margin:0 auto;padding:80px 32px 80px}
@@ -327,6 +360,7 @@ footer a:hover{color:var(--tl)}
     </div>
   </div>
   <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <div class="lang-sw">
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
@@ -646,27 +680,33 @@ function renderR(){
 
 function drawChart(){
   const{arka,sp500,cetes,banco,yrs,name}=R;
-  const lbs=Array.from({length:yrs+1},(_,i)=>i===0?'Hoy':`Año ${i}`);
+  const lbs=Array.from({length:yrs+1},(_,i)=>i===0?'Hoy':`${lang==='en'?'Year':'Año'} ${i}`);
+  const light=document.body.classList.contains('light');
+  const gridCol=light?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.025)';
+  const tickCol=light?'#8a9099':'#3a3f47';
+  const legendCol=light?'#4a4f56':'#565b63';
   if(myChart)myChart.destroy();
   myChart=new Chart(document.getElementById('mc').getContext('2d'),{
     type:'line',
     data:{labels:lbs,datasets:[
       {label:`ARKA ${name}`,data:arka,borderColor:'#00BAB3',backgroundColor:'rgba(0,186,179,0.06)',fill:true,borderWidth:2.5,tension:.4,pointRadius:0,pointHoverRadius:5},
-      {label:'S&P 500',data:sp500,borderColor:'#22c55e',backgroundColor:'transparent',borderWidth:1.5,borderDash:[6,3],tension:.4,pointRadius:0,pointHoverRadius:4},
-      {label:'CETES',data:cetes,borderColor:'#3d4350',backgroundColor:'transparent',borderWidth:1.5,borderDash:[3,3],tension:.4,pointRadius:0,pointHoverRadius:4},
-      {label:'Banca',data:banco,borderColor:'#1a1e25',backgroundColor:'transparent',borderWidth:1,borderDash:[2,4],tension:.4,pointRadius:0,pointHoverRadius:4},
+      {label:'S&P 500',data:sp500,borderColor:light?'#16a34a':'#22c55e',backgroundColor:'transparent',borderWidth:1.5,borderDash:[6,3],tension:.4,pointRadius:0,pointHoverRadius:4},
+      {label:'CETES',data:cetes,borderColor:light?'#9ca3af':'#3d4350',backgroundColor:'transparent',borderWidth:1.5,borderDash:[3,3],tension:.4,pointRadius:0,pointHoverRadius:4},
+      {label:lang==='en'?'Bank':'Banca',data:banco,borderColor:light?'#d1d5db':'#1a1e25',backgroundColor:'transparent',borderWidth:1,borderDash:[2,4],tension:.4,pointRadius:0,pointHoverRadius:4},
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
       plugins:{
-        legend:{position:'top',labels:{color:'#565b63',font:{family:"'Montserrat'",size:10,weight:'600'},usePointStyle:true,boxWidth:7,padding:18}},
-        tooltip:{backgroundColor:'rgba(0,0,0,.96)',titleColor:'#00BAB3',bodyColor:'#d2d5d9',borderColor:'rgba(0,186,179,.18)',borderWidth:1,padding:12,
+        legend:{position:'top',labels:{color:legendCol,font:{family:"'Montserrat'",size:10,weight:'600'},usePointStyle:true,boxWidth:7,padding:18}},
+        tooltip:{backgroundColor:light?'rgba(255,255,255,0.97)':'rgba(0,0,0,.96)',
+          titleColor:'#00BAB3',bodyColor:light?'#1a1d21':'#d2d5d9',
+          borderColor:'rgba(0,186,179,.18)',borderWidth:1,padding:12,
           callbacks:{label:c=>` ${c.dataset.label}: $${f(c.parsed.y)}`}}
       },
       scales:{
-        x:{grid:{color:'rgba(255,255,255,.025)'},ticks:{color:'#3a3f47',font:{family:"'Montserrat'",size:9}}},
-        y:{grid:{color:'rgba(255,255,255,.025)'},ticks:{color:'#3a3f47',font:{family:"'Montserrat'",size:9},callback:v=>'$'+(v>=1e6?(v/1e6).toFixed(1)+'M':f(v))}}
+        x:{grid:{color:gridCol},ticks:{color:tickCol,font:{family:"'Montserrat'",size:9}}},
+        y:{grid:{color:gridCol},ticks:{color:tickCol,font:{family:"'Montserrat'",size:9},callback:v=>'$'+(v>=1e6?(v/1e6).toFixed(1)+'M':f(v))}}
       }
     }
   });
@@ -916,7 +956,23 @@ async function buildPDF(clientName){
   doc.save(`ARKA_Simulation_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`);
 }
 
-/* ── i18n TRANSLATION ENGINE ── */
+/* ── THEME TOGGLE ── */
+let isDark = true;
+function toggleTheme(){
+  isDark = !isDark;
+  document.body.classList.toggle('light', !isDark);
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('arka_theme', isDark ? 'dark' : 'light');
+  // Re-render chart if visible so colors update
+  if(myChart) drawChart();
+}
+// Restore saved preference
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved = localStorage.getItem('arka_theme');
+  if(saved === 'light'){ isDark=false; document.body.classList.add('light'); document.getElementById('themeBtn').textContent='☀️'; }
+});
+
+
 const T = {
   es: {
     nav_sub:'Investment Simulator',
