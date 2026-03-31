@@ -877,6 +877,15 @@ function drawChart(){
   });
 }
 
+/* ── TELEGRAM ── */
+const TG_TOKEN='8482266610:AAF3GIUeLqCtt1Rp9hys8eIHZP_btXetNpA';
+const TG_CHAT='188610921';
+async function sendTelegram(nm,em,wa,am,strat,cap,yrs,mo){
+  const fecha=new Date().toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
+  const txt=`🔔 *Nuevo Lead — ARKA Alpha Fund*\n\n👤 ${nm}\n📧 ${em}\n📱 ${wa}\n💰 ${am||'No especificado'}\n\n📊 *Estrategia:* ${strat}\n📈 Capital: $${f(cap)} · ${yrs} años · $${f(mo)}/mes\n\n🕐 ${fecha}`;
+  try{await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:txt,parse_mode:'Markdown'})});}catch(e){console.warn('TG:',e);}
+}
+
 async function handleLead(){
   const nm=document.getElementById('fN').value.trim();
   const em=document.getElementById('fE').value.trim();
@@ -887,11 +896,14 @@ async function handleLead(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Ingresa un correo electrónico válido.');return;}
   const btn=document.getElementById('dlBtn'),sp=document.getElementById('dSpin'),ic=document.getElementById('dIcon');
   btn.disabled=true;sp.style.display='block';ic.style.display='none';
+  // Guardar en Supabase
   try{
     if(sb)await sb.from('leads').upsert({name:nm,email:em,whatsapp:wa,amount_range:am,
       strategy:S.name,capital:S.cap,years:S.yrs,monthly:S.mo,
       created_at:new Date().toISOString()},{onConflict:'email'});
   }catch(e){console.warn(e);}
+  // Notificar a Telegram
+  await sendTelegram(nm,em,wa,am,`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,S.cap,S.yrs,S.mo);
   await buildPDF(nm);
   btn.disabled=false;sp.style.display='none';ic.style.display='';
   document.getElementById('sb2').classList.add('show');
