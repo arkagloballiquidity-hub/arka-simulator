@@ -879,11 +879,14 @@ function drawChart(){
 
 /* ── TELEGRAM ── */
 const TG_TOKEN='8482266610:AAF3GIUeLqCtt1Rp9hys8eIHZP_btXetNpA';
-const TG_CHAT='188610921';
+const TG_CHATS=['188610921','-5125313014']; // personal + grupo ARKA Alpha Fund Leads
 async function sendTelegram(nm,em,wa,am,strat,cap,yrs,mo){
   const fecha=new Date().toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
   const txt=`🔔 *Nuevo Lead — ARKA Alpha Fund*\n\n👤 ${nm}\n📧 ${em}\n📱 ${wa}\n💰 ${am||'No especificado'}\n\n📊 *Estrategia:* ${strat}\n📈 Capital: $${f(cap)} · ${yrs} años · $${f(mo)}/mes\n\n🕐 ${fecha}`;
-  try{await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:txt,parse_mode:'Markdown'})});}catch(e){console.warn('TG:',e);}
+  for(const chat of TG_CHATS){
+    try{await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat,text:txt,parse_mode:'Markdown'})});}
+    catch(e){console.warn('TG:',e);}
+  }
 }
 
 async function handleLead(){
