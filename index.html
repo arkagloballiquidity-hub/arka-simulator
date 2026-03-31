@@ -466,7 +466,7 @@ footer a:hover{color:var(--tl)}
 <div class="card fade">
   <div class="slbl" data-i="s1_label">Configuración</div>
   <div class="stit" data-i="s1_title">Parámetros de Simulación</div>
-  <div class="ssub" data-i="s1_sub">Ajusta tu capital, horizonte y estrategia. El motor calcula interés compuesto mensual con ajuste real por inflación.</div>
+  <div class="ssub" data-i="s1_sub">Ajusta tu capital, horizonte y estrategia. El motor calcula rendimientos usando la tasa diaria real por días del mes.</div>
 
   <div style="margin-bottom:32px">
     <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:14px" data-i="strat_title">Elige tu Estrategia ARKA</div>
@@ -617,7 +617,7 @@ footer a:hover{color:var(--tl)}
     <div>
       <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:20px" data-i="inc_lbl">El informe incluye</div>
       <div class="bfl">
-        <div class="bf"><div class="bfi">📊</div><div><div class="bt" data-i="b1_t">Proyección Personalizada</div><div class="bd" data-i="b1_d">Capital proyectado año por año con tus parámetros y ajuste real por inflación</div></div></div>
+        <div class="bf"><div class="bfi">📊</div><div><div class="bt" data-i="b1_t">Proyección Personalizada</div><div class="bd" data-i="b1_d">Capital proyectado año por año con tus parámetros exactos de inversión</div></div></div>
         <div class="bf"><div class="bfi">📈</div><div><div class="bt" data-i="b2_t">Comparativa Completa</div><div class="bd" data-i="b2_d">ARKA vs S&P 500 vs CETES vs Banca — multiplicadores y ventaja en dólares</div></div></div>
         <div class="bf"><div class="bfi">🔒</div><div><div class="bt" data-i="b3_t">Onboarding y Custodia</div><div class="bd" data-i="b3_d">Proceso KYC/AML, creación de cuenta y arquitectura de custodia institucional</div></div></div>
       </div>
@@ -651,8 +651,8 @@ footer a:hover{color:var(--tl)}
 
 <script>
 const SB_URL='YOUR_SUPABASE_URL',SB_KEY='YOUR_SUPABASE_ANON_KEY';
-// S&P 500: promedio anual real últimos 20 años (2004-2024) = 10.7%
-const BENCH={sp500:0.107,cetes:0.098,banco:0.05};
+// S&P 500: CAGR real últimos 20 años (2005-2024) = 10.2% (con dividendos reinvertidos)
+const BENCH={sp500:0.102,cetes:0.098,banco:0.05};
 let S={cap:50000,yrs:10,mo:500,rate:.24,name:'Strategic Growth',mode:'compound'};
 let myChart=null,sb=null,R=null;
 
@@ -778,7 +778,7 @@ function renderR(){
     </tr></thead>
     <tbody>${[
       {l:`ARKA ${name}`,r:`${(rate*100).toFixed(0)}%`,v:fA,c:'ca'},
-      {l:`S&P 500 (${lang==='en'?'20yr avg':'prom. 20 años'})`,r:'10.7%',v:fS,c:'cn'},
+      {l:`S&P 500 (${lang==='en'?'20yr avg':'prom. 20 años'})`,r:'10.2%',v:fS,c:'cn'},
       {l:'CETES (México)',r:'9.8%',v:fC,c:'cn'},
       {l:lang==='en'?'Bank Deposit':'Banca Tradicional',r:'5%',v:fB,c:'cn'},
     ].map(r=>`<tr>
@@ -916,7 +916,7 @@ async function buildPDF(clientName){
   const{jsPDF}=window.jspdf;
   const W=210,H=297,M=18;
   const CW=W-M*2;
-  const{arka,sp500,cetes,banco,cap,yrs,mo,infl,rate,name}=R;
+  const{arka,sp500,cetes,banco,cap,yrs,mo,rate,name}=R;
   const inv=cap+mo*12*yrs;
   const fA=arka[yrs],fS=sp500[yrs],fC=cetes[yrs],fB=banco[yrs];
   const gPct=((fA/inv-1)*100).toFixed(0);
@@ -1027,8 +1027,8 @@ async function buildPDF(clientName){
   // ── PARAMS ──────────────────────────────────────────
   sh(lang_is_en?'SIMULATION PARAMETERS':'PARÁMETROS DE SIMULACIÓN');
   const ps=lang_is_en
-    ?[['Strategy',`ARKA ${name} — ${(rate*100).toFixed(0)}% annual`],['Initial Capital',`$${f(cap)}`],['Monthly Contribution',`$${f(mo)}`],['Investment Horizon',`${yrs} years`],['Total Contributed',`$${f(inv)}`],['Est. Inflation',`${(infl*100).toFixed(1)}%`]]
-    :[['Estrategia',`ARKA ${name} — ${(rate*100).toFixed(0)}% anual`],['Capital Inicial',`$${f(cap)}`],['Aportación Mensual',`$${f(mo)}`],['Horizonte',`${yrs} ${lang_is_en?'years':'años'}`],['Total Aportado',`$${f(inv)}`],['Inflación Estimada',`${(infl*100).toFixed(1)}%`]];
+    ?[['Strategy',`ARKA ${name} — ${(rate*100).toFixed(0)}% annual`],['Initial Capital',`$${f(cap)}`],['Monthly Contribution',`$${f(mo)}`],['Investment Horizon',`${yrs} years`],['Total Contributed',`$${f(inv)}`],['Interest Mode',mode==='compound'?'Compound':'Simple']]
+    :[['Estrategia',`ARKA ${name} — ${(rate*100).toFixed(0)}% anual`],['Capital Inicial',`$${f(cap)}`],['Aportación Mensual',`$${f(mo)}`],['Horizonte',`${yrs} ${lang_is_en?'years':'años'}`],['Total Aportado',`$${f(inv)}`],['Tipo de Interés',mode==='compound'?'Compuesto':'Simple']];
   const cw2=(CW-6)/2;
   ps.forEach((p,i)=>{
     check(8);
@@ -1063,7 +1063,7 @@ async function buildPDF(clientName){
   const cHdrs=lang_is_en?['Instrument','Annual Rate','Final Capital','Net Gain','Multiplier']:['Instrumento','Tasa Anual','Capital Final','Ganancia','Multiplicador'];
   sf('bold',5,G70);cHdrs.forEach((h,i)=>doc.text(h,cxs[i],y));
   y+=2;hRule(y);y+=5;
-  const cRows=[[`ARKA ${name}`,`${(rate*100).toFixed(0)}%`,fA,true],['S&P 500 (USA)','14%',fS,false],[lang_is_en?'CETES (Mexico)':'CETES (México)','9.8%',fC,false],[lang_is_en?'Bank Deposit':'Banca Tradicional','5%',fB,false]];
+  const cRows=[[`ARKA ${name}`,`${(rate*100).toFixed(0)}%`,fA,true],['S&P 500 (USA)','10.2%',fS,false],[lang_is_en?'CETES (Mexico)':'CETES (México)','9.8%',fC,false],[lang_is_en?'Bank Deposit':'Banca Tradicional','5%',fB,false]];
   cRows.forEach(([nm,rs,fin,isA],i)=>{
     check(7);
     if(i%2===0){doc.setFillColor(...CARD);doc.rect(M,y-2.5,CW,6,'F');}
@@ -1175,20 +1175,20 @@ const T = {
     feat1:'Acceso institucional a mercados globales con gestión profesional del riesgo',
     feat2:'Proyecciones precisas basadas en datos reales y verificables',
     feat3:'Compara ARKA contra S&P 500, CETES y depósitos bancarios',
-    feat4:'Análisis ajustado por inflación real',
+    feat4:'Tabla mensual detallada para horizontes menores a 3 años',
     gold_tag:'Sobre ARKA Global Liquidity',
     gold_text:'Operamos como hedge fund institucional con infraestructura de nivel profesional. Nuestras estrategias utilizan modelos cuantitativos avanzados y ejecución sistemática en mercados globales.',
     gold_pill:'Objetivo: Proteger capital primero, generar retornos consistentes mediante disciplina y tecnología.',
     step1_lbl:'Parámetros', step2_lbl:'Resultados', step3_lbl:'Informe PDF',
     s1_label:'Configuración', s1_title:'Parámetros de Simulación',
-    s1_sub:'Ajusta tu capital, horizonte y estrategia. El motor calcula interés compuesto mensual con ajuste real por inflación.',
+    s1_sub:'Ajusta tu capital, horizonte y estrategia. El motor calcula rendimientos usando la tasa diaria real por días del mes.',
     strat_title:'Elige tu Estrategia ARKA',
     per_year:'/ año',
     strat1_desc:'Preservación de capital · Family Offices · Largo plazo · Control estricto de drawdown',
     strat2_desc:'Apreciación activa · Multi-activo · Análisis macro + ejecución sistemática',
     strat3_desc:'Alpha cuantitativo puro · HNWI · Modelos algorítmicos avanzados',
     lbl_capital:'Capital Inicial (USD)', lbl_years:'Horizonte de Inversión',
-    lbl_monthly:'Aportación Mensual (USD)', lbl_infl:'Inflación Anual Estimada',
+    lbl_monthly:'Aportación Mensual (USD)',
     lbl_calc:'Calcular Proyección', lbl_recalc:'Recalcular',
     lbl_getpdf:'Obtener Informe PDF',
     s2_label:'Proyección',
@@ -1207,7 +1207,7 @@ const T = {
     succ_t:'Informe generado y descargado',
     succ_b:'Un asesor ARKA te contactará en las próximas 24 horas.',
     inc_lbl:'El informe incluye',
-    b1_t:'Proyección Personalizada', b1_d:'Capital proyectado año por año con tus parámetros y ajuste real por inflación',
+    b1_t:'Proyección Personalizada', b1_d:'Capital proyectado año por año con tus parámetros exactos de inversión',
     b2_t:'Comparativa Completa', b2_d:'ARKA vs S&P 500 vs CETES vs Banca — multiplicadores y ventaja en dólares',
     b3_t:'Onboarding y Custodia', b3_d:'Proceso KYC/AML, creación de cuenta y arquitectura de custodia institucional',
     disc:'AVISO LEGAL: Este simulador es una herramienta educativa e ilustrativa. Los rendimientos proyectados se basan en objetivos de retorno anual de cada estrategia y no constituyen garantía de resultados futuros. Invertir en derivados, CFD y divisas implica riesgos significativos, incluyendo la posible pérdida total del capital. ARKA Global Liquidity Ltd., IBC No. 2025-00568, Santa Lucía. Material destinado exclusivamente a inversionistas calificados.',
@@ -1242,20 +1242,20 @@ const T = {
     feat1:'Institutional access to global markets with professional risk management',
     feat2:'Precise projections based on real, verifiable data',
     feat3:'Compare ARKA vs S&P 500, CETES and bank deposits',
-    feat4:'Analysis adjusted for real inflation',
+    feat4:'Monthly breakdown table for horizons under 3 years',
     gold_tag:'About ARKA Global Liquidity',
     gold_text:'We operate as an institutional hedge fund with professional-grade infrastructure. Our strategies use advanced quantitative models and systematic execution across global markets.',
     gold_pill:'Objective: Protect capital first, generate consistent returns through discipline and technology.',
     step1_lbl:'Parameters', step2_lbl:'Results', step3_lbl:'PDF Report',
     s1_label:'Setup', s1_title:'Simulation Parameters',
-    s1_sub:'Set your capital, horizon and strategy. The engine calculates monthly compound interest with real inflation adjustment.',
+    s1_sub:'Set your capital, horizon and strategy. The engine calculates returns using the actual daily rate per days of each month.',
     strat_title:'Choose your ARKA Strategy',
     per_year:'/ year',
     strat1_desc:'Capital preservation · Family Offices · Long-term · Strict drawdown control',
     strat2_desc:'Active appreciation · Multi-asset · Macro analysis + systematic execution',
     strat3_desc:'Pure quantitative alpha · HNWI · Advanced algorithmic models',
     lbl_capital:'Initial Capital (USD)', lbl_years:'Investment Horizon',
-    lbl_monthly:'Monthly Contribution (USD)', lbl_infl:'Estimated Annual Inflation',
+    lbl_monthly:'Monthly Contribution (USD)',
     lbl_calc:'Calculate Projection', lbl_recalc:'Recalculate',
     lbl_getpdf:'Get PDF Report',
     s2_label:'Projection',
@@ -1274,7 +1274,7 @@ const T = {
     succ_t:'Report generated and downloaded',
     succ_b:'An ARKA advisor will contact you within 24 hours.',
     inc_lbl:'The report includes',
-    b1_t:'Personalized Projection', b1_d:'Capital projected year by year with your exact parameters and real inflation adjustment',
+    b1_t:'Personalized Projection', b1_d:'Capital projected year by year with your exact investment parameters',
     b2_t:'Complete Comparison', b2_d:'ARKA vs S&P 500 vs CETES vs Bank — multipliers and dollar advantage',
     b3_t:'Onboarding & Custody', b3_d:'KYC/AML process, account creation and institutional custody architecture',
     disc:'LEGAL DISCLAIMER: This simulator is an educational and illustrative tool. Projected returns are based on annual return targets and do not constitute a guarantee of future results. Investing in derivatives, CFDs and currencies involves significant risks, including possible total loss of capital. ARKA Global Liquidity Ltd., IBC No. 2025-00568, Saint Lucia. For qualified investors only.',
