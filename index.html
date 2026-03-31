@@ -171,6 +171,56 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
 }
 .gold-pill::before{content:'◆';font-size:.5rem;opacity:.7}
 
+/* HERO HORIZONTAL STATS */
+.hero-stats{
+  display:flex;align-items:center;gap:0;
+  max-width:780px;margin:0 auto 52px;
+  background:var(--c1);border:1px solid var(--b1);border-radius:10px;
+  overflow:hidden;text-align:left;
+}
+.hstat{display:flex;align-items:center;gap:16px;padding:20px 28px;flex:0 0 auto}
+.hstat-pct{font-size:2.4rem;font-weight:900;letter-spacing:-.04em;line-height:1;flex-shrink:0}
+.hstat-usa{color:var(--off)}
+.hstat-mex{color:var(--tl)}
+.hstat-info{display:flex;flex-direction:column;gap:3px}
+.hstat-country{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--m)}
+.hstat-desc{font-size:.72rem;font-weight:300;color:var(--off2);line-height:1.4;max-width:160px}
+.hstat-divider{width:1px;height:52px;background:var(--b1);flex-shrink:0}
+.hstat-quote{flex:1;padding:20px 28px;font-size:.78rem;font-weight:300;color:var(--m);
+  line-height:1.6;font-style:italic;border-left:2px solid var(--tb)}
+
+@media(max-width:820px){
+  .hero-stats{flex-direction:column;text-align:center}
+  .hstat{justify-content:center;padding:16px 20px;width:100%}
+  .hstat-desc{max-width:none;text-align:center}
+  .hstat-divider{width:100%;height:1px}
+  .hstat-quote{border-left:none;border-top:1px solid var(--b1);text-align:center;padding:16px 20px}
+}
+
+/* MODE BUTTONS */
+.mode-btn{display:flex;align-items:center;gap:10px;flex:1;
+  background:var(--c2);border:1px solid var(--b1);border-radius:8px;
+  padding:14px 16px;cursor:pointer;font-family:var(--sans);text-align:left;
+  transition:all .2s;position:relative;overflow:hidden}
+.mode-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--t);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+.mode-btn.active{border-color:rgba(0,186,179,.38);background:var(--td)}
+.mode-btn.active::after{transform:scaleX(1)}
+.mode-btn:hover:not(.active){border-color:var(--b2)}
+.mode-icon{font-size:1.3rem;flex-shrink:0}
+.mode-name{display:block;font-size:.75rem;font-weight:700;color:var(--off);letter-spacing:-.01em}
+.mode-desc{display:block;font-size:.6rem;color:var(--m);margin-top:2px;font-weight:300}
+.mode-btn.active .mode-name{color:var(--tl)}
+.mode-btn.active .mode-desc{color:var(--t)}
+.rc.hi2{border-color:rgba(200,168,90,.3);background:rgba(200,168,90,.06)}
+
+/* EDITORIAL (below calculator) */
+.editorial-section{padding:60px 0 0}
+.editorial-eyebrow{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--t);text-align:center;margin-bottom:40px;display:flex;align-items:center;
+  justify-content:center;gap:10px}
+.editorial-eyebrow::before,.editorial-eyebrow::after{content:'';width:40px;height:1px;background:var(--t);opacity:.4}
+
 /* STEPS */
 .steps{display:flex;align-items:center;justify-content:center;margin-bottom:44px}
 .sd{display:flex;align-items:center;gap:8px;font-size:.67rem;font-weight:600;
@@ -375,46 +425,29 @@ footer a:hover{color:var(--tl)}
 <!-- ══ HERO ══════════════════════════════════ -->
 <div class="hero fade">
   <div class="hlbl" data-i="hero_label">Hedge Fund · Capital Institucional · Mercados Globales</div>
-  <h1 class="hh1" data-i="hero_h1">Tu dinero trabaja.<br><em>¿O solo descansa?</em></h1>
-  <p class="hh2" data-i="hero_h2">Descubre cuánto estás dejando de ganar.</p>
+  <h1 class="hh1" data-i="hero_h1">Alpha Fund</h1>
+  <p class="hh2" data-i="hero_h2">Simulador de Portafolio</p>
 
-  <!-- Editorial block -->
-  <div class="editorial d1 fade">
-    <div class="ed-left">
-      <div class="ed-stat-block">
-        <div class="ed-country" data-i="country_usa">Estados Unidos</div>
-        <div class="ed-pct usa">55%</div>
-        <div class="ed-pct-sublabel usa" data-i="stat_sublabel">del patrimonio familiar</div>
-        <div class="ed-pct-label" data-i="stat_usa_desc">está invertido en mercados financieros — acciones, fondos de inversión y planes de retiro vinculados a la bolsa que generan riqueza real y sostenida.</div>
-      </div>
-      <div class="ed-stat-block">
-        <div class="ed-country" data-i="country_mex">México</div>
-        <div class="ed-pct mex">5%</div>
-        <div class="ed-pct-sublabel mex" data-i="stat_sublabel">del patrimonio familiar</div>
-        <div class="ed-pct-label" data-i="stat_mex_desc">llega a mercados financieros. La mayoría permanece en efectivo o bienes raíces de baja liquidez — capital que podría estar creciendo, pero no lo hace.</div>
+  <!-- Horizontal stats -->
+  <div class="hero-stats fade d1">
+    <div class="hstat">
+      <div class="hstat-pct hstat-usa">55%</div>
+      <div class="hstat-info">
+        <span class="hstat-country" data-i="country_usa">Estados Unidos</span>
+        <span class="hstat-desc" data-i="stat_usa_short">del patrimonio familiar invertido en mercados financieros</span>
       </div>
     </div>
-    <div class="ed-right">
-      <p class="ed-impact" data-i="ed_impact">Esta diferencia estructural genera un impacto directo en la acumulación de riqueza a largo plazo.<br><em>El costo de no invertir es real.</em></p>
-      <p class="ed-quote" data-i="ed_quote">"El verdadero riesgo no es comenzar a invertir hoy. El verdadero riesgo es mirar hacia atrás en cinco años y darse cuenta de que nunca se comenzó."</p>
-      <div class="ed-divider"></div>
-      <div class="ed-cta-title" data-i="ed_cta_title">Lo que ARKA te ofrece</div>
-      <div class="ed-features">
-        <div class="ed-feat"><div class="ed-feat-icon">🌐</div><span data-i="feat1">Acceso institucional a mercados globales con gestión profesional del riesgo</span></div>
-        <div class="ed-feat"><div class="ed-feat-icon">📊</div><span data-i="feat2">Proyecciones precisas basadas en datos reales y verificables</span></div>
-        <div class="ed-feat"><div class="ed-feat-icon">⚖️</div><span data-i="feat3">Compara ARKA contra S&P 500, CETES y depósitos bancarios</span></div>
-        <div class="ed-feat"><div class="ed-feat-icon">📉</div><span data-i="feat4">Análisis ajustado por inflación real</span></div>
+    <div class="hstat-divider"></div>
+    <div class="hstat">
+      <div class="hstat-pct hstat-mex">5%</div>
+      <div class="hstat-info">
+        <span class="hstat-country" data-i="country_mex">México</span>
+        <span class="hstat-desc" data-i="stat_mex_short">del patrimonio familiar llega a mercados financieros</span>
       </div>
     </div>
-  </div>
-
-  <!-- Gold ARKA box -->
-  <div class="gold-box d2 fade">
-    <div class="gold-icon">🏛️</div>
-    <div class="gold-body">
-      <div class="gold-tag" data-i="gold_tag">Sobre ARKA Global Liquidity</div>
-      <p class="gold-text" data-i="gold_text">Operamos como hedge fund institucional con infraestructura de nivel profesional. Nuestras estrategias utilizan modelos cuantitativos avanzados y ejecución sistemática en mercados globales.</p>
-      <div class="gold-pill" data-i="gold_pill">Objetivo: Proteger capital primero, generar retornos consistentes mediante disciplina y tecnología.</div>
+    <div class="hstat-divider"></div>
+    <div class="hstat-quote">
+      <span data-i="hero_stat_note">Esta brecha estructural representa una oportunidad real de crecimiento patrimonial.</span>
     </div>
   </div>
 </div><!-- /hero -->
@@ -456,6 +489,26 @@ footer a:hover{color:var(--tl)}
     </div>
   </div>
 
+  <div style="margin-bottom:28px">
+    <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:12px" data-i="mode_title">Tipo de Interés</div>
+    <div style="display:flex;gap:10px">
+      <button class="mode-btn active" id="modeCompound" onclick="setMode('compound')">
+        <span class="mode-icon">♻️</span>
+        <span>
+          <span class="mode-name" data-i="mode_compound">Interés Compuesto</span>
+          <span class="mode-desc" data-i="mode_compound_desc">Los rendimientos se reinvierten</span>
+        </span>
+      </button>
+      <button class="mode-btn" id="modeSimple" onclick="setMode('simple')">
+        <span class="mode-icon">➕</span>
+        <span>
+          <span class="mode-name" data-i="mode_simple">Interés Simple</span>
+          <span class="mode-desc" data-i="mode_simple_desc">Solo sobre el capital inicial</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
   <div class="fg">
     <div class="fld">
       <label data-i="lbl_capital">Capital Inicial (USD)</label>
@@ -474,12 +527,6 @@ footer a:hover{color:var(--tl)}
       <div class="rv" id="dM">$500 / mes</div>
       <input type="range" id="rM" min="0" max="10000" step="100" value="500" oninput="upd('m',this.value)">
       <div class="rl"><span>$0</span><span>$10,000</span></div>
-    </div>
-    <div class="fld">
-      <label data-i="lbl_infl">Inflación Anual Estimada</label>
-      <div class="rv" id="dI">3.5%</div>
-      <input type="range" id="rI" min="0" max="15" step="0.5" value="3.5" oninput="upd('i',this.value)">
-      <div class="rl"><span>0%</span><span>15%</span></div>
     </div>
   </div>
 
@@ -513,6 +560,8 @@ footer a:hover{color:var(--tl)}
 
   <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:10px" data-i="cmp_inst">Comparativa de Instrumentos</div>
   <table class="ct" id="ctT"></table>
+
+  <div id="moSection" style="display:none"></div>
 
   <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin:20px 0 10px" data-i="cmp_year">Proyección Año por Año</div>
   <div class="aw"><table class="an" id="anT"></table></div>
@@ -602,8 +651,9 @@ footer a:hover{color:var(--tl)}
 
 <script>
 const SB_URL='YOUR_SUPABASE_URL',SB_KEY='YOUR_SUPABASE_ANON_KEY';
-const BENCH={sp500:.14,cetes:.098,banco:.05};
-let S={cap:50000,yrs:10,mo:500,infl:.035,rate:.24,name:'Strategic Growth'};
+// S&P 500: promedio anual real últimos 20 años (2004-2024) = 10.7%
+const BENCH={sp500:0.107,cetes:0.098,banco:0.05};
+let S={cap:50000,yrs:10,mo:500,rate:.24,name:'Strategic Growth',mode:'compound'};
 let myChart=null,sb=null,R=null;
 
 window.addEventListener('DOMContentLoaded',()=>{
@@ -618,7 +668,6 @@ function upd(k,v){
   if(k==='c'){S.cap=v;document.getElementById('dC').textContent='$'+f(v)}
   if(k==='y'){S.yrs=v;document.getElementById('dY').textContent=v+' '+(v!==1?yrs:yr)}
   if(k==='m'){S.mo=v;document.getElementById('dM').textContent='$'+f(v)+' '+mo}
-  if(k==='i'){S.infl=v/100;document.getElementById('dI').textContent=v.toFixed(1)+'%'}
 }
 
 function pickS(el,r,n){
@@ -626,11 +675,44 @@ function pickS(el,r,n){
   el.classList.add('sel');S.rate=r;S.name=n;
 }
 
-function grow(cap,mo,rate,yrs){
-  const mr=Math.pow(1+rate,1/12)-1;
-  const a=[cap];let b=cap;
-  for(let m=1;m<=yrs*12;m++){b=b*(1+mr)+mo;if(m%12===0)a.push(b);}
-  return a;
+// Días por mes (año no bisiesto base)
+const DAYS_IN_MONTH=[0,31,28,31,30,31,30,31,31,30,31,30,31];
+
+function monthlyRate(annualRate, monthIndex){
+  // monthIndex 1-12 → días reales del mes
+  const days = DAYS_IN_MONTH[((monthIndex-1)%12)+1];
+  return annualRate / 365 * days;
+}
+
+function growCompound(cap, mo, annualRate, yrs){
+  // Día 1 de cada mes: se abona rendimiento del mes anterior sobre el SALDO acumulado
+  // Ese rendimiento se suma al saldo → genera más rendimiento el mes siguiente (compuesto)
+  const yearly=[cap]; const monthly_arr=[cap];
+  let saldo = cap;
+  for(let m=1; m<=yrs*12; m++){
+    const mr = monthlyRate(annualRate, m);
+    const interes = saldo * mr;       // rendimiento del mes sobre saldo actual
+    saldo = saldo + interes + mo;     // se reinvierte + aportación
+    monthly_arr.push(saldo);
+    if(m%12===0) yearly.push(saldo);
+  }
+  return{yearly, monthly:monthly_arr};
+}
+
+function growSimple(cap, mo, annualRate, yrs){
+  // Día 1 de cada mes: se abona rendimiento del mes anterior sobre el CAPITAL ORIGINAL
+  // No se reinvierte — el interés no genera más interés
+  const yearly=[cap]; const monthly_arr=[cap];
+  let saldo = cap;
+  let totalAportado = cap;
+  for(let m=1; m<=yrs*12; m++){
+    const mr = monthlyRate(annualRate, m);
+    const interes = cap * mr;         // siempre sobre capital original (simple)
+    saldo = saldo + interes + mo;     // saldo sube pero interés no se compone
+    monthly_arr.push(saldo);
+    if(m%12===0) yearly.push(saldo);
+  }
+  return{yearly, monthly:monthly_arr};
 }
 
 function runSim(){
@@ -639,10 +721,19 @@ function runSim(){
   const ic=document.getElementById('cIcon');
   btn.disabled=true;sp.style.display='block';ic.style.display='none';
   setTimeout(()=>{
-    const{cap,yrs,mo,infl,rate,name}=S;
-    R={arka:grow(cap,mo,rate,yrs),sp500:grow(cap,mo,BENCH.sp500,yrs),
-       cetes:grow(cap,mo,BENCH.cetes,yrs),banco:grow(cap,mo,BENCH.banco,yrs),
-       cap,yrs,mo,infl,rate,name};
+    const{cap,yrs,mo,rate,name,mode}=S;
+    const growFn = mode==='simple' ? growSimple : growCompound;
+    const arka_d  = growFn(cap,mo,rate,yrs);
+    const sp_d    = growFn(cap,mo,BENCH.sp500,yrs);
+    const cetes_d = growFn(cap,mo,BENCH.cetes,yrs);
+    const banco_d = growFn(cap,mo,BENCH.banco,yrs);
+    R={
+      arka:   arka_d.yearly,   arka_mo:  arka_d.monthly,
+      sp500:  sp_d.yearly,
+      cetes:  cetes_d.yearly,
+      banco:  banco_d.yearly,
+      cap,yrs,mo,rate,name,mode
+    };
     renderR();
     btn.disabled=false;sp.style.display='none';ic.style.display='';
     go(2);
@@ -650,31 +741,105 @@ function runSim(){
 }
 
 function renderR(){
-  const{arka,sp500,cetes,banco,cap,yrs,mo,name,rate}=R;
+  const{arka,sp500,cetes,banco,arka_mo,cap,yrs,mo,name,rate,mode}=R;
   const inv=cap+mo*12*yrs;
   const fA=arka[yrs],fS=sp500[yrs],fC=cetes[yrs],fB=banco[yrs];
   const gain=fA-inv,gPct=((fA/inv-1)*100).toFixed(0);
-  document.getElementById('rT').textContent=`ARKA ${name} — ${yrs} años`;
-  document.getElementById('rS').textContent=`Capital inicial $${f(cap)} + $${f(mo)}/mes · ${yrs} años · ${(rate*100).toFixed(0)}% anual`;
-  document.getElementById('ctag').textContent=`${yrs} AÑOS`;
+  const modeLabel=lang==='en'?(mode==='simple'?'Simple Interest':'Compound Interest'):(mode==='simple'?'Interés Simple':'Interés Compuesto');
+
+  document.getElementById('rT').textContent=`ARKA ${name} — ${yrs} ${lang==='en'?'years':'años'}`;
+  document.getElementById('rS').textContent=`$${f(cap)} + $${f(mo)}/${lang==='en'?'mo':'mes'} · ${yrs} ${lang==='en'?'yrs':'años'} · ${(rate*100).toFixed(0)}% · ${modeLabel}`;
+  document.getElementById('ctag').textContent=`${yrs} ${lang==='en'?'YRS':'AÑOS'}`;
 
   document.getElementById('resGrid').innerHTML=`
-    <div class="rc hi"><div class="rcl">Capital Final ARKA</div><div class="rcv">$${f(fA)}</div><div class="rcs">+${gPct}% retorno total</div></div>
-    <div class="rc"><div class="rcl">Ganancia Neta</div><div class="rcv" style="color:var(--gr)">$${f(gain)}</div><div class="rcs">vs $${f(inv)} invertido</div></div>
-    <div class="rc"><div class="rcl">Ventaja vs S&P 500</div><div class="rcv">$${f(fA-fS)}</div><div class="rcs">S&P finaliza en $${f(fS)}</div></div>`;
+    <div class="rc hi">
+      <div class="rcl">${lang==='en'?'Final ARKA Capital':'Capital Final ARKA'}</div>
+      <div class="rcv">$${f(fA)}</div>
+      <div class="rcs">+${gPct}% ${lang==='en'?'total return':'retorno total'}</div>
+    </div>
+    <div class="rc">
+      <div class="rcl">${lang==='en'?'Net Gain':'Ganancia Neta'}</div>
+      <div class="rcv" style="color:var(--gr)">$${f(gain)}</div>
+      <div class="rcs">${lang==='en'?'on':'vs'} $${f(inv)} ${lang==='en'?'invested':'invertido'}</div>
+    </div>
+    <div class="rc">
+      <div class="rcl">${lang==='en'?'Advantage vs S&P 500':'Ventaja vs S&P 500'}</div>
+      <div class="rcv">$${f(fA-fS)}</div>
+      <div class="rcs">S&P ${lang==='en'?'ends at':'finaliza'} $${f(fS)}</div>
+    </div>`;
 
   document.getElementById('ctT').innerHTML=`
-    <thead><tr><th>Instrumento</th><th>Tasa Anual</th><th>Capital Final</th><th>Ganancia</th><th>Multiplicador</th></tr></thead>
+    <thead><tr>
+      <th>${lang==='en'?'Instrument':'Instrumento'}</th>
+      <th>${lang==='en'?'Annual Rate':'Tasa Anual'}</th>
+      <th>${lang==='en'?'Final Capital':'Capital Final'}</th>
+      <th>${lang==='en'?'Net Gain':'Ganancia'}</th>
+      <th>${lang==='en'?'Multiplier':'Multiplicador'}</th>
+    </tr></thead>
     <tbody>${[
       {l:`ARKA ${name}`,r:`${(rate*100).toFixed(0)}%`,v:fA,c:'ca'},
-      {l:'S&P 500 (EE.UU.)',r:'14%',v:fS,c:'cn'},
+      {l:`S&P 500 (${lang==='en'?'20yr avg':'prom. 20 años'})`,r:'10.7%',v:fS,c:'cn'},
       {l:'CETES (México)',r:'9.8%',v:fC,c:'cn'},
-      {l:'Banca Tradicional',r:'5%',v:fB,c:'cn'},
-    ].map(r=>`<tr><td class="${r.c}">${r.l}</td><td>${r.r}</td><td class="${r.c}">$${f(r.v)}</td><td class="${r.c==='ca'?'cp':''}">$${f(r.v-inv)}</td><td>${(r.v/inv).toFixed(1)}x</td></tr>`).join('')}</tbody>`;
+      {l:lang==='en'?'Bank Deposit':'Banca Tradicional',r:'5%',v:fB,c:'cn'},
+    ].map(r=>`<tr>
+      <td class="${r.c}">${r.l}</td>
+      <td>${r.r}</td>
+      <td class="${r.c}">$${f(r.v)}</td>
+      <td class="${r.c==='ca'?'cp':''}">$${f(r.v-inv)}</td>
+      <td>${(r.v/inv).toFixed(1)}x</td>
+    </tr>`).join('')}</tbody>`;
 
-  let an=`<thead><tr><th>Año</th><th>ARKA ${name}</th><th>S&P 500</th><th>CETES</th><th>Banca</th></tr></thead><tbody>`;
-  for(let y=1;y<=yrs;y++)an+=`<tr><td>Año ${y}</td><td class="ac2">$${f(arka[y])}</td><td>$${f(sp500[y])}</td><td>$${f(cetes[y])}</td><td>$${f(banco[y])}</td></tr>`;
+  // Annual table
+  let an=`<thead><tr>
+    <th style="text-align:left">${lang==='en'?'Year':'Año'}</th>
+    <th>ARKA ${name}</th>
+    <th>S&P 500</th><th>CETES</th><th>${lang==='en'?'Bank':'Banca'}</th>
+  </tr></thead><tbody>`;
+  for(let y=1;y<=yrs;y++){
+    an+=`<tr>
+      <td>${lang==='en'?'Year':'Año'} ${y}</td>
+      <td class="ac2">$${f(arka[y])}</td>
+      <td>$${f(sp500[y])}</td>
+      <td>$${f(cetes[y])}</td>
+      <td>$${f(banco[y])}</td>
+    </tr>`;
+  }
   document.getElementById('anT').innerHTML=an+'</tbody>';
+
+  // Monthly table — when horizon ≤ 3 years
+  const moSection=document.getElementById('moSection');
+  if(yrs<=3){
+    let moHtml=`
+      <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin:20px 0 10px">
+        ${lang==='en'?'Monthly Breakdown':'Desglose Mensual'}
+      </div>
+      <div class="aw" style="max-height:320px"><table class="an"><thead><tr>
+        <th style="text-align:left">${lang==='en'?'Month':'Mes'}</th>
+        <th>${lang==='en'?'Balance':'Saldo'}</th>
+        <th>${lang==='en'?'Interest (day 1)':'Interés (día 1)'}</th>
+        <th>${lang==='en'?'Contribution':'Aportación'}</th>
+      </tr></thead><tbody>`;
+    for(let m=1;m<=yrs*12;m++){
+      const prevBal=arka_mo[m-1];
+      // Interest = what was earned: current balance minus prev balance minus contribution
+      const interes = mode==='compound'
+        ? prevBal * monthlyRate(rate, m)
+        : cap * monthlyRate(rate, m);
+      moHtml+=`<tr>
+        <td>${lang==='en'?'Mo':'Mes'} ${m}</td>
+        <td class="ac2">$${f(arka_mo[m])}</td>
+        <td style="color:var(--gr)">+$${f(interes)}</td>
+        <td style="color:var(--off2)">+$${f(mo)}</td>
+      </tr>`;
+    }
+    moHtml+='</tbody></table></div>';
+    moSection.innerHTML=moHtml;
+    moSection.style.display='block';
+  } else {
+    moSection.innerHTML='';
+    moSection.style.display='none';
+  }
+
   drawChart();
 }
 
@@ -956,7 +1121,13 @@ async function buildPDF(clientName){
   doc.save(`ARKA_Simulation_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`);
 }
 
-/* ── THEME TOGGLE ── */
+function setMode(m){
+  S.mode=m;
+  document.getElementById('modeCompound').classList.toggle('active',m==='compound');
+  document.getElementById('modeSimple').classList.toggle('active',m==='simple');
+}
+
+
 let isDark = true;
 function toggleTheme(){
   isDark = !isDark;
@@ -977,8 +1148,8 @@ const T = {
   es: {
     nav_sub:'Investment Simulator',
     hero_label:'Hedge Fund · Capital Institucional · Mercados Globales',
-    hero_h1:'Tu dinero trabaja.<br><em>¿O solo descansa?</em>',
-    hero_h2:'Descubre cuánto estás dejando de ganar.',
+    hero_h1:'Alpha Fund',
+    hero_h2:'Simulador de Portafolio',
     country_usa:'Estados Unidos', country_mex:'México',
     stat_sublabel:'del patrimonio familiar',
     stat_usa_desc:'está invertido en mercados financieros — acciones, fondos de inversión y planes de retiro vinculados a la bolsa que generan riqueza real y sostenida.',
@@ -1031,12 +1202,21 @@ const T = {
     lbl_back_res:'Ver Resultados',
     gold_text_s:'Hedge fund institucional con modelos cuantitativos avanzados y ejecución sistemática en mercados globales.',
     gold_pill_s:'Proteger capital primero, retornos consistentes.',
+    mode_title:'Tipo de Interés',
+    mode_compound:'Interés Compuesto',
+    mode_compound_desc:'Los rendimientos se reinvierten mes a mes',
+    mode_simple:'Interés Simple',
+    mode_simple_desc:'Solo sobre el capital inicial',
+    stat_usa_short:'del patrimonio familiar invertido en mercados financieros',
+    stat_mex_short:'del patrimonio familiar llega a mercados financieros',
+    hero_stat_note:'Esta brecha estructural representa una oportunidad real de crecimiento patrimonial.',
+    ed_eyebrow:'¿Por qué invertir con ARKA?',
   },
   en: {
     nav_sub:'Investment Simulator',
     hero_label:'Hedge Fund · Institutional Capital · Global Markets',
-    hero_h1:'Your money works.<br><em>Or does it just sit there?</em>',
-    hero_h2:'Find out how much you\'re leaving on the table.',
+    hero_h1:'Alpha Fund',
+    hero_h2:'Portfolio Simulator',
     country_usa:'United States', country_mex:'Mexico',
     stat_sublabel:'of household wealth',
     stat_usa_desc:'is invested in financial markets — stocks, mutual funds and retirement plans linked to the stock exchange that generate real, sustained wealth.',
@@ -1089,6 +1269,15 @@ const T = {
     lbl_back_res:'Back to Results',
     gold_text_s:'Institutional hedge fund with advanced quantitative models and systematic execution across global markets.',
     gold_pill_s:'Protect capital first, generate consistent returns.',
+    mode_title:'Interest Type',
+    mode_compound:'Compound Interest',
+    mode_compound_desc:'Returns reinvested every month',
+    mode_simple:'Simple Interest',
+    mode_simple_desc:'Only on the initial capital',
+    stat_usa_short:'of household wealth invested in financial markets',
+    stat_mex_short:'of household wealth reaches financial markets',
+    hero_stat_note:'This structural gap represents a real opportunity for wealth growth.',
+    ed_eyebrow:'Why invest with ARKA?',
   }
 };
 
@@ -1107,7 +1296,6 @@ function setLang(l) {
   upd('c', document.getElementById('rC').value);
   upd('y', document.getElementById('rY').value);
   upd('m', document.getElementById('rM').value);
-  upd('i', document.getElementById('rI').value);
   if (R && document.getElementById('step2').classList.contains('active')) renderR();
 }
 
