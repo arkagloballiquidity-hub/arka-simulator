@@ -567,13 +567,13 @@ footer a:hover{color:var(--tl)}
 </footer>
 
 <script>
-const SB_URL='https://fmycgssuqyrkpylccsut.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZteWNnc3N1cXlya3B5bGNjc3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MjUwNzYsImV4cCI6MjA5MDUwMTA3Nn0.8DNU139iE3RO_1qVabnBp2vJa673IU23y7LSzQVzFOA';
+const SB_URL='YOUR_SUPABASE_URL',SB_KEY='YOUR_SUPABASE_ANON_KEY';
 const BENCH={sp500:.14,cetes:.098,banco:.05};
 let S={cap:50000,yrs:10,mo:500,infl:.035,rate:.24,name:'Strategic Growth'};
 let myChart=null,sb=null,R=null;
 
 window.addEventListener('DOMContentLoaded',()=>{
-  if(SB_URL!=='https://fmycgssuqyrkpylccsut.supabase.co'){try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}}
+  if(SB_URL!=='YOUR_SUPABASE_URL'){try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}}
 });
 
 function upd(k,v){
@@ -1067,7 +1067,8 @@ function go(n){
     if(i<n){d.classList.add('done');if(l)l.classList.add('done');}
     else if(i===n)d.classList.add('active');
   }
-  window.scrollTo({top:0,behavior:'smooth'});
+  // Scroll suavemente al step indicator, no al top de la página
+  document.getElementById('d'+n).scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function f(n){return Math.round(n).toLocaleString('en-US');}
