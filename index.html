@@ -907,7 +907,12 @@ async function handleLead(){
   }catch(e){console.warn(e);}
   // Notificar a Telegram
   await sendTelegram(nm,em,wa,am,`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,S.cap,S.yrs,S.mo);
-  await buildPDF(nm);
+  try{
+    await buildPDF(nm);
+  }catch(e){
+    console.error('PDF error:',e);
+    alert(lang==='en'?'Error generating PDF. Please try again.':'Error al generar el PDF. Por favor intenta de nuevo.');
+  }
   btn.disabled=false;sp.style.display='none';ic.style.display='';
   document.getElementById('sb2').classList.add('show');
 }
@@ -916,7 +921,7 @@ async function buildPDF(clientName){
   const{jsPDF}=window.jspdf;
   const W=210,H=297,M=18;
   const CW=W-M*2;
-  const{arka,sp500,cetes,banco,cap,yrs,mo,rate,name}=R;
+  const{arka,sp500,cetes,banco,cap,yrs,mo,rate,name,mode}=R;
   const inv=cap+mo*12*yrs;
   const fA=arka[yrs],fS=sp500[yrs],fC=cetes[yrs],fB=banco[yrs];
   const gPct=((fA/inv-1)*100).toFixed(0);
