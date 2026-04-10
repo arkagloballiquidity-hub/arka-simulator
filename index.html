@@ -654,7 +654,7 @@ footer a:hover{color:var(--tl)}
 <script>
 const SB_URL='YOUR_SUPABASE_URL',SB_KEY='YOUR_SUPABASE_ANON_KEY';
 // S&P 500: CAGR real últimos 20 años (2005-2024) = 10.2% (con dividendos reinvertidos)
-const BENCH={sp500:0.102,cetes:0.098,banco:0.05};
+const BENCH={sp500:0.102,cetes:0.086,banco:0.05};
 let S={cap:50000,yrs:10,mo:500,rate:.24,name:'Strategic Growth',mode:'compound'};
 let myChart=null,sb=null,R=null;
 
@@ -781,7 +781,7 @@ function renderR(){
     <tbody>${[
       {l:`ARKA ${name}`,r:`${(rate*100).toFixed(0)}%`,v:fA,c:'ca'},
       {l:`S&P 500 (${lang==='en'?'20yr avg':'prom. 20 años'})`,r:'10.2%',v:fS,c:'cn'},
-      {l:'CETES (México)',r:'9.8%',v:fC,c:'cn'},
+      {l:'CETES (México)',r:'8.6%',v:fC,c:'cn'},
       {l:lang==='en'?'Bank Deposit':'Banca Tradicional',r:'5%',v:fB,c:'cn'},
     ].map(r=>`<tr>
       <td class="${r.c}">${r.l}</td>
@@ -1070,7 +1070,7 @@ async function buildPDF(clientName){
   const cHdrs=lang_is_en?['Instrument','Annual Rate','Final Capital','Net Gain','Multiplier']:['Instrumento','Tasa Anual','Capital Final','Ganancia','Multiplicador'];
   sf('bold',5,G70);cHdrs.forEach((h,i)=>doc.text(h,cxs[i],y));
   y+=2;hRule(y);y+=5;
-  const cRows=[[`ARKA ${name}`,`${(rate*100).toFixed(0)}%`,fA,true],['S&P 500 (USA)','10.2%',fS,false],[lang_is_en?'CETES (Mexico)':'CETES (México)','9.8%',fC,false],[lang_is_en?'Bank Deposit':'Banca Tradicional','5%',fB,false]];
+  const cRows=[[`ARKA ${name}`,`${(rate*100).toFixed(0)}%`,fA,true],['S&P 500 (USA)','10.2%',fS,false],[lang_is_en?'CETES (Mexico)':'CETES (México)','8.6%',fC,false],[lang_is_en?'Bank Deposit':'Banca Tradicional','5%',fB,false]];
   cRows.forEach(([nm,rs,fin,isA],i)=>{
     check(7);
     if(i%2===0){doc.setFillColor(...CARD);doc.rect(M,y-2.5,CW,6,'F');}
