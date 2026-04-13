@@ -434,10 +434,6 @@ input[type=number]{-moz-appearance:textfield}
   </div>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
-    <div class="curr-sw">
-      <button class="curr-btn active" id="btn-usd" onclick="setCurr('USD')">USD</button>
-      <button class="curr-btn" id="btn-mxn" onclick="setCurr('MXN')">MXN</button>
-    </div>
     <div class="lang-sw">
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
@@ -531,6 +527,26 @@ input[type=number]{-moz-appearance:textfield}
         <span>
           <span class="mode-name" data-i="mode_simple">Interés Simple</span>
           <span class="mode-desc" data-i="mode_simple_desc">Solo sobre el capital inicial</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div style="margin-bottom:28px">
+    <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:12px" data-i="curr_title">Moneda</div>
+    <div style="display:flex;gap:10px">
+      <button class="mode-btn active" id="btn-usd" onclick="setCurr('USD')" style="flex:0 0 auto;padding:12px 24px">
+        <span class="mode-icon">🇺🇸</span>
+        <span>
+          <span class="mode-name">USD</span>
+          <span class="mode-desc">Dólar estadounidense</span>
+        </span>
+      </button>
+      <button class="mode-btn" id="btn-mxn" onclick="setCurr('MXN')" style="flex:0 0 auto;padding:12px 24px">
+        <span class="mode-icon">🇲🇽</span>
+        <span>
+          <span class="mode-name">MXN</span>
+          <span class="mode-desc">Peso mexicano</span>
         </span>
       </button>
     </div>
@@ -1203,8 +1219,8 @@ function syncNum(k,v){
 }
 function setCurr(c){
   curr=c;
-  document.getElementById('btn-usd').classList.toggle('active',c==='USD');
-  document.getElementById('btn-mxn').classList.toggle('active',c==='MXN');
+  ['btn-usd','btn-mxn'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById(c==='USD'?'btn-usd':'btn-mxn').classList.add('active');
   // Update labels only — numbers stay the same, no conversion
   upd('c',document.getElementById('rC').value);
   upd('m',document.getElementById('rM').value);
@@ -1293,6 +1309,7 @@ const T = {
     lbl_back_res:'Ver Resultados',
     gold_text_s:'Hedge fund institucional con modelos cuantitativos avanzados y ejecución sistemática en mercados globales.',
     gold_pill_s:'Proteger capital primero, retornos consistentes.',
+    curr_title:'Moneda',
     mode_title:'Tipo de Interés',
     mode_compound:'Interés Compuesto',
     mode_compound_desc:'Los rendimientos se reinvierten mes a mes',
@@ -1360,6 +1377,7 @@ const T = {
     lbl_back_res:'Back to Results',
     gold_text_s:'Institutional hedge fund with advanced quantitative models and systematic execution across global markets.',
     gold_pill_s:'Protect capital first, generate consistent returns.',
+    curr_title:'Currency',
     mode_title:'Interest Type',
     mode_compound:'Compound Interest',
     mode_compound_desc:'Returns reinvested every month',
