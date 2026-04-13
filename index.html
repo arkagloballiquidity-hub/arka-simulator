@@ -1189,6 +1189,18 @@ async function buildPDF(clientName){
 
 /* ── CURRENCY ── */
 let curr='USD';
+function syncNum(k,v){
+  v=parseFloat(v)||0;
+  if(k==='c'){
+    v=Math.min(5000000,Math.max(1000,v));
+    document.getElementById('rC').value=v;
+  }
+  if(k==='m'){
+    v=Math.min(1000000,Math.max(0,v));
+    document.getElementById('rM').value=v;
+  }
+  upd(k,v);
+}
 function setCurr(c){
   curr=c;
   document.getElementById('btn-usd').classList.toggle('active',c==='USD');
