@@ -199,6 +199,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
   .hstat-quote{border-left:none;border-top:1px solid var(--b1);text-align:center;padding:16px 20px}
 }
 
+/* SLIDER + INPUT ROW */
+.slider-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.num-inp{width:110px;padding:5px 10px;font-size:.78rem;font-weight:600;
+  font-family:var(--sans);border:1px solid var(--b1);border-radius:6px;
+  background:var(--c2);color:var(--off);text-align:right;
+  transition:border-color .2s;-moz-appearance:textfield}
+.num-inp::-webkit-inner-spin-button,.num-inp::-webkit-outer-spin-button{opacity:.4}
+.num-inp:focus{outline:none;border-color:var(--t);background:var(--td)}
+
+/* CURRENCY TOGGLE */
+.curr-sw{display:flex;background:var(--c2);border:1px solid var(--b1);border-radius:5px;overflow:hidden}
+.curr-btn{padding:5px 12px;font-size:.62rem;font-weight:700;letter-spacing:.08em;
+  cursor:pointer;border:none;background:transparent;color:var(--m);
+  font-family:var(--sans);transition:all .15s}
+.curr-btn.active{background:var(--t);color:#fff}
+
 /* MODE BUTTONS */
 .mode-btn{display:flex;align-items:center;gap:10px;flex:1;
   background:var(--c2);border:1px solid var(--b1);border-radius:8px;
@@ -399,6 +415,11 @@ footer a:hover{color:var(--tl)}
   .sl{width:22px}
   .sd span{display:none}
 }
+/* Hide number input arrows/spinners */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
 </style>
 </head>
 <body>
@@ -413,6 +434,10 @@ footer a:hover{color:var(--tl)}
   </div>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <div class="curr-sw">
+      <button class="curr-btn active" id="btn-usd" onclick="setCurr('USD')">USD</button>
+      <button class="curr-btn" id="btn-mxn" onclick="setCurr('MXN')">MXN</button>
+    </div>
     <div class="lang-sw">
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
@@ -514,9 +539,13 @@ footer a:hover{color:var(--tl)}
   <div class="fg">
     <div class="fld">
       <label data-i="lbl_capital">Capital Inicial (USD)</label>
-      <div class="rv" id="dC">$50,000</div>
-      <input type="range" id="rC" min="1000" max="1000000" step="1000" value="50000" oninput="upd('c',this.value)">
-      <div class="rl"><span>$1,000</span><span>$1,000,000</span></div>
+      <div class="slider-row">
+        <div class="rv" id="dC">$50,000</div>
+        <input type="number" class="num-inp" id="nC" min="1000" max="5000000" step="1000" value="50000"
+          oninput="syncNum('c',this.value)" placeholder="50000">
+      </div>
+      <input type="range" id="rC" min="1000" max="5000000" step="1000" value="50000" oninput="upd('c',this.value)">
+      <div class="rl"><span>$1,000</span><span>$5,000,000</span></div>
     </div>
     <div class="fld">
       <label data-i="lbl_years">Horizonte de Inversión</label>
@@ -526,9 +555,13 @@ footer a:hover{color:var(--tl)}
     </div>
     <div class="fld">
       <label data-i="lbl_monthly">Aportación Mensual (USD)</label>
-      <div class="rv" id="dM">$500 / mes</div>
-      <input type="range" id="rM" min="0" max="10000" step="100" value="500" oninput="upd('m',this.value)">
-      <div class="rl"><span>$0</span><span>$10,000</span></div>
+      <div class="slider-row">
+        <div class="rv" id="dM">$500 / mes</div>
+        <input type="number" class="num-inp" id="nM" min="0" max="1000000" step="500" value="500"
+          oninput="syncNum('m',this.value)" placeholder="500">
+      </div>
+      <input type="range" id="rM" min="0" max="1000000" step="500" value="500" oninput="upd('m',this.value)">
+      <div class="rl"><span>$0</span><span>$1,000,000</span></div>
     </div>
   </div>
 
@@ -667,9 +700,18 @@ function upd(k,v){
   const yr = lang==='en' ? 'year' : 'año';
   const yrs = lang==='en' ? 'years' : 'años';
   const mo = lang==='en' ? '/ mo' : '/ mes';
-  if(k==='c'){S.cap=v;document.getElementById('dC').textContent='$'+f(v)}
+  const cs = currSym();
+  if(k==='c'){
+    S.cap=v;
+    document.getElementById('dC').textContent=cs+f(v)+' '+curr;
+    const ni=document.getElementById('nC'); if(ni&&document.activeElement!==ni) ni.value=Math.round(v);
+  }
   if(k==='y'){S.yrs=v;document.getElementById('dY').textContent=v+' '+(v!==1?yrs:yr)}
-  if(k==='m'){S.mo=v;document.getElementById('dM').textContent='$'+f(v)+' '+mo}
+  if(k==='m'){
+    S.mo=v;
+    document.getElementById('dM').textContent=cs+f(v)+' '+mo;
+    const ni=document.getElementById('nM'); if(ni&&document.activeElement!==ni) ni.value=Math.round(v);
+  }
 }
 
 function pickS(el,r,n){
@@ -745,65 +787,66 @@ function runSim(){
 function renderR(){
   const{arka,sp500,cetes,banco,arka_mo,cap,yrs,mo,name,rate,mode}=R;
   const inv=cap+mo*12*yrs;
-  const fA=arka[yrs],fS=sp500[yrs],fC=cetes[yrs],fB=banco[yrs];
+  const fA=arka[yrs],fS=sp500[yrs],fCetes=cetes[yrs],fB=banco[yrs];
   const gain=fA-inv,gPct=((fA/inv-1)*100).toFixed(0);
   const modeLabel=lang==='en'?(mode==='simple'?'Simple Interest':'Compound Interest'):(mode==='simple'?'Interés Simple':'Interés Compuesto');
 
-  document.getElementById('rT').textContent=`ARKA ${name} — ${yrs} ${lang==='en'?'years':'años'}`;
-  document.getElementById('rS').textContent=`$${f(cap)} + $${f(mo)}/${lang==='en'?'mo':'mes'} · ${yrs} ${lang==='en'?'yrs':'años'} · ${(rate*100).toFixed(0)}% · ${modeLabel}`;
+  const cs=currSym();
+  document.getElementById('rT').textContent=`ARKA ${name} — ${yrs} ${lang==='en'?'years':'años'} · ${curr}`;
+  document.getElementById('rS').textContent=`${cs}${fC(cap)} + ${cs}${fC(mo)}/${lang==='en'?'mo':'mes'} · ${yrs} ${lang==='en'?'yrs':'años'} · ${(rate*100).toFixed(0)}% · ${modeLabel}`;
   document.getElementById('ctag').textContent=`${yrs} ${lang==='en'?'YRS':'AÑOS'}`;
 
   document.getElementById('resGrid').innerHTML=`
     <div class="rc hi">
-      <div class="rcl">${lang==='en'?'Final ARKA Capital':'Capital Final ARKA'}</div>
-      <div class="rcv">$${f(fA)}</div>
+      <div class="rcl">${lang==='en'?'Final ARKA Capital':'Capital Final ARKA'} (${curr})</div>
+      <div class="rcv">${cs}${fC(fA)}</div>
       <div class="rcs">+${gPct}% ${lang==='en'?'total return':'retorno total'}</div>
     </div>
     <div class="rc">
-      <div class="rcl">${lang==='en'?'Net Gain':'Ganancia Neta'}</div>
-      <div class="rcv" style="color:var(--gr)">$${f(gain)}</div>
-      <div class="rcs">${lang==='en'?'on':'vs'} $${f(inv)} ${lang==='en'?'invested':'invertido'}</div>
+      <div class="rcl">${lang==='en'?'Net Gain':'Ganancia Neta'} (${curr})</div>
+      <div class="rcv" style="color:var(--gr)">${cs}${fC(gain)}</div>
+      <div class="rcs">${lang==='en'?'on':'vs'} ${cs}${fC(inv)} ${lang==='en'?'invested':'invertido'}</div>
     </div>
     <div class="rc">
-      <div class="rcl">${lang==='en'?'Advantage vs S&P 500':'Ventaja vs S&P 500'}</div>
-      <div class="rcv">$${f(fA-fS)}</div>
-      <div class="rcs">S&P ${lang==='en'?'ends at':'finaliza'} $${f(fS)}</div>
+      <div class="rcl">${lang==='en'?'Advantage vs S&P 500':'Ventaja vs S&P 500'} (${curr})</div>
+      <div class="rcv">${cs}${fC(fA-fS)}</div>
+      <div class="rcs">S&P ${lang==='en'?'ends at':'finaliza'} ${cs}${fC(fS)}</div>
     </div>`;
 
   document.getElementById('ctT').innerHTML=`
     <thead><tr>
       <th>${lang==='en'?'Instrument':'Instrumento'}</th>
       <th>${lang==='en'?'Annual Rate':'Tasa Anual'}</th>
-      <th>${lang==='en'?'Final Capital':'Capital Final'}</th>
-      <th>${lang==='en'?'Net Gain':'Ganancia'}</th>
+      <th>${lang==='en'?`Final Capital (${curr})`:`Capital Final (${curr})`}</th>
+      <th>${lang==='en'?`Net Gain (${curr})`:`Ganancia (${curr})`}</th>
       <th>${lang==='en'?'Multiplier':'Multiplicador'}</th>
     </tr></thead>
     <tbody>${[
       {l:`ARKA ${name}`,r:`${(rate*100).toFixed(0)}%`,v:fA,c:'ca'},
       {l:`S&P 500 (${lang==='en'?'20yr avg':'prom. 20 años'})`,r:'10.2%',v:fS,c:'cn'},
-      {l:'CETES (México)',r:'8.5%',v:fC,c:'cn'},
+      {l:'CETES (México)',r:'8.5%',v:fCetes,c:'cn'},
       {l:lang==='en'?'Bank Deposit':'Banca Tradicional',r:'5%',v:fB,c:'cn'},
     ].map(r=>`<tr>
       <td class="${r.c}">${r.l}</td>
       <td>${r.r}</td>
-      <td class="${r.c}">$${f(r.v)}</td>
-      <td class="${r.c==='ca'?'cp':''}">$${f(r.v-inv)}</td>
+      <td class="${r.c}">${cs}${fC(r.v)}</td>
+      <td class="${r.c==='ca'?'cp':''}">${cs}${fC(r.v-inv)}</td>
       <td>${(r.v/inv).toFixed(1)}x</td>
     </tr>`).join('')}</tbody>`;
 
   // Annual table
   let an=`<thead><tr>
     <th style="text-align:left">${lang==='en'?'Year':'Año'}</th>
-    <th>ARKA ${name}</th>
-    <th>S&P 500</th><th>CETES</th><th>${lang==='en'?'Bank':'Banca'}</th>
+    <th>ARKA ${name} (${curr})</th>
+    <th>S&P 500 (${curr})</th><th>CETES (${curr})</th><th>${lang==='en'?`Bank (${curr})`:`Banca (${curr})`}</th>
   </tr></thead><tbody>`;
   for(let y=1;y<=yrs;y++){
     an+=`<tr>
       <td>${lang==='en'?'Year':'Año'} ${y}</td>
-      <td class="ac2">$${f(arka[y])}</td>
-      <td>$${f(sp500[y])}</td>
-      <td>$${f(cetes[y])}</td>
-      <td>$${f(banco[y])}</td>
+      <td class="ac2">${cs}${fC(arka[y])}</td>
+      <td>${cs}${fC(sp500[y])}</td>
+      <td>${cs}${fC(cetes[y])}</td>
+      <td>${cs}${fC(banco[y])}</td>
     </tr>`;
   }
   document.getElementById('anT').innerHTML=an+'</tbody>';
@@ -829,9 +872,9 @@ function renderR(){
         : cap * monthlyRate(rate, m);
       moHtml+=`<tr>
         <td>${lang==='en'?'Mo':'Mes'} ${m}</td>
-        <td class="ac2">$${f(arka_mo[m])}</td>
-        <td style="color:var(--gr)">+$${f(interes)}</td>
-        <td style="color:var(--off2)">+$${f(mo)}</td>
+        <td class="ac2">${cs}${fC(arka_mo[m])}</td>
+        <td style="color:var(--gr)">+${cs}${fC(interes)}</td>
+        <td style="color:var(--off2)">+${cs}${fC(mo)}</td>
       </tr>`;
     }
     moHtml+='</tbody></table></div>';
@@ -925,7 +968,7 @@ async function buildPDF(clientName){
   const CW=W-M*2;
   const{arka,sp500,cetes,banco,cap,yrs,mo,rate,name,mode}=R;
   const inv=cap+mo*12*yrs;
-  const fA=arka[yrs],fS=sp500[yrs],fC=cetes[yrs],fB=banco[yrs];
+  const fA=arka[yrs],fS=sp500[yrs],fCetes=cetes[yrs],fB=banco[yrs];
   const gPct=((fA/inv-1)*100).toFixed(0);
   const lang_is_en=(lang==='en');
 
@@ -1070,7 +1113,7 @@ async function buildPDF(clientName){
   const cHdrs=lang_is_en?['Instrument','Annual Rate','Final Capital','Net Gain','Multiplier']:['Instrumento','Tasa Anual','Capital Final','Ganancia','Multiplicador'];
   sf('bold',5,G70);cHdrs.forEach((h,i)=>doc.text(h,cxs[i],y));
   y+=2;hRule(y);y+=5;
-  const cRows=[[`ARKA ${name}`,`${(rate*100).toFixed(0)}%`,fA,true],['S&P 500 (USA)','10.2%',fS,false],[lang_is_en?'CETES (Mexico)':'CETES (México)','8.5%',fC,false],[lang_is_en?'Bank Deposit':'Banca Tradicional','5%',fB,false]];
+  const cRows=[[`ARKA ${name}`,`${(rate*100).toFixed(0)}%`,fA,true],['S&P 500 (USA)','10.2%',fS,false],[lang_is_en?'CETES (Mexico)':'CETES (México)','8.5%',cetes[yrs],false],[lang_is_en?'Bank Deposit':'Banca Tradicional','5%',fB,false]];
   cRows.forEach(([nm,rs,fin,isA],i)=>{
     check(7);
     if(i%2===0){doc.setFillColor(...CARD);doc.rect(M,y-2.5,CW,6,'F');}
@@ -1130,21 +1173,35 @@ async function buildPDF(clientName){
   check(14);
   y+=3;
   doc.setFillColor(...TEALBG);doc.setDrawColor(...TEAL);doc.setLineWidth(0.35);
-  doc.roundedRect(M,y,CW,12,1.5,1.5,'FD');
-  sf('bold',5.5,TEAL);doc.text(lang_is_en?'INSTITUTIONAL CUSTODY ARCHITECTURE':'ARQUITECTURA DE CUSTODIA INSTITUCIONAL',M+3,y+5);
-  sf('normal',5,G50);
-  const custLines=lang_is_en
-    ?['Capital held via institutional banking (Eqwire), digital asset processing (CoinsBuy) and','segregated trading accounts with continuous real-time monitoring of exposure, margin and risk.']
-    :['Capital custodiado vía infraestructura bancaria (Eqwire), activos digitales (CoinsBuy) y cuentas de','trading segregadas — con monitoreo continuo en tiempo real de exposición, margen y riesgo.'];
-  custLines.forEach((l,i)=>doc.text(l,M+3,y+9+i*4));
-  y+=16;
+  const custText=lang_is_en
+    ?'Capital held via institutional banking (Eqwire), digital asset processing (CoinsBuy) and segregated trading accounts with continuous real-time monitoring of exposure, margin and risk.'
+    :'Capital custodiado vía infraestructura bancaria (Eqwire), activos digitales (CoinsBuy) y cuentas de trading segregadas — con monitoreo continuo en tiempo real de exposición, margen y riesgo.';
+  const custLines=doc.splitTextToSize(custText,CW-6);
+  const custH=Math.max(14,8+custLines.length*4);
+  doc.roundedRect(M,y-3,CW,custH,1.5,1.5,'FD');
+  sf('bold',5.5,TEAL);doc.text(lang_is_en?'INSTITUTIONAL CUSTODY ARCHITECTURE':'ARQUITECTURA DE CUSTODIA INSTITUCIONAL',M+3,y+2);
+  sf('normal',5,G50);custLines.forEach((l,i)=>doc.text(l,M+3,y+6+i*4));
+  y+=custH+3;
 
   drawFooter();
   doc.save(`ARKA_Simulation_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`);
 }
 
+/* ── CURRENCY ── */
+let curr='USD';
+function setCurr(c){
+  curr=c;
+  document.getElementById('btn-usd').classList.toggle('active',c==='USD');
+  document.getElementById('btn-mxn').classList.toggle('active',c==='MXN');
+  // Update labels only — numbers stay the same, no conversion
+  upd('c',document.getElementById('rC').value);
+  upd('m',document.getElementById('rM').value);
+  if(R && document.getElementById('step2').classList.contains('active')) renderR();
+}
+function fC(v){return f(v);}       // no conversion — same number, different currency label
+function currSym(){return curr==='MXN'?'MX$':'$';}
+
 function setMode(m){
-  S.mode=m;
   document.getElementById('modeCompound').classList.toggle('active',m==='compound');
   document.getElementById('modeSimple').classList.toggle('active',m==='simple');
 }
