@@ -970,9 +970,12 @@ async function handleLead(){
   await sendTelegram(nm,em,wa,am,`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,S.cap,S.yrs,S.mo);
   try{
     const pdfB64 = await buildPDF(nm);
+    console.log('PDF generado, b64 length:', pdfB64 ? pdfB64.length : 'NULL');
+    console.log('SB_URL:', SB_URL);
     // Enviar PDF por email al cliente
     if(pdfB64 && SB_URL!=='https://fmycgssuqyrkpylccsut.supabase.co'){
-      fetch(`${SB_URL}/functions/v1/send-pdf`,{
+      console.log('Enviando email a:', em);
+      const emailRes = await fetch(`${SB_URL}/functions/v1/send-pdf`,{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':`Bearer ${SB_KEY}`},
         body:JSON.stringify({
@@ -980,10 +983,14 @@ async function handleLead(){
           strategy:`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,
           capital:S.cap,years:S.yrs,currency:curr
         })
-      }).catch(e=>console.warn('Email error:',e));
+      });
+      const emailData = await emailRes.json();
+      console.log('Email response:', JSON.stringify(emailData));
+    } else {
+      console.warn('Email no enviado — pdfB64:', !!pdfB64, 'SB_URL configurado:', SB_URL!=='https://fmycgssuqyrkpylccsut.supabase.co');
     }
   }catch(e){
-    console.error('PDF error:',e);
+    console.error('PDF/Email error:',e);
     alert(lang==='en'?'Error generating PDF. Please try again.':'Error al generar el PDF. Por favor intenta de nuevo.');
   }
   btn.disabled=false;sp.style.display='none';ic.style.display='';
