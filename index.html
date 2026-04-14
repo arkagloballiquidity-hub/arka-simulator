@@ -969,7 +969,19 @@ async function handleLead(){
   // Notificar a Telegram
   await sendTelegram(nm,em,wa,am,`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,S.cap,S.yrs,S.mo);
   try{
-    await buildPDF(nm);
+    const pdfB64 = await buildPDF(nm);
+    // Enviar PDF por email al cliente
+    if(pdfB64 && SB_URL!=='YOUR_SUPABASE_URL'){
+      fetch(`${SB_URL}/functions/v1/send-pdf`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':`Bearer ${SB_KEY}`},
+        body:JSON.stringify({
+          name:nm,email:em,pdfBase64:pdfB64,
+          strategy:`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,
+          capital:S.cap,years:S.yrs,currency:curr
+        })
+      }).catch(e=>console.warn('Email error:',e));
+    }
   }catch(e){
     console.error('PDF error:',e);
     alert(lang==='en'?'Error generating PDF. Please try again.':'Error al generar el PDF. Por favor intenta de nuevo.');
@@ -1200,7 +1212,10 @@ async function buildPDF(clientName){
   y+=custH+3;
 
   drawFooter();
+  const pdfBytes = doc.output('datauristring');
+  const b64 = pdfBytes.split(',')[1];
   doc.save(`ARKA_Simulation_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`);
+  return b64;
 }
 
 /* ── CURRENCY ── */
