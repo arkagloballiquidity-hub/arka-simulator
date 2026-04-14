@@ -701,14 +701,14 @@ input[type=number]{-moz-appearance:textfield}
 </footer>
 
 <script>
-const SB_URL='YOUR_SUPABASE_URL',SB_KEY='YOUR_SUPABASE_ANON_KEY';
+const SB_URL='https://fmycgssuqyrkpylccsut.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZteWNnc3N1cXlya3B5bGNjc3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MjUwNzYsImV4cCI6MjA5MDUwMTA3Nn0.8DNU139iE3RO_1qVabnBp2vJa673IU23y7LSzQVzFOA';
 // S&P 500: CAGR real últimos 20 años (2005-2024) = 10.2% (con dividendos reinvertidos)
 const BENCH={sp500:0.102,cetes:0.085,banco:0.05};
 let S={cap:50000,yrs:10,mo:500,rate:.24,name:'Strategic Growth',mode:'compound'};
 let myChart=null,sb=null,R=null;
 
 window.addEventListener('DOMContentLoaded',()=>{
-  if(SB_URL!=='YOUR_SUPABASE_URL'){try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}}
+  if(SB_URL!=='https://fmycgssuqyrkpylccsut.supabase.co'){try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}}
 });
 
 function upd(k,v){
@@ -971,7 +971,7 @@ async function handleLead(){
   try{
     const pdfB64 = await buildPDF(nm);
     // Enviar PDF por email al cliente
-    if(pdfB64 && SB_URL!=='YOUR_SUPABASE_URL'){
+    if(pdfB64 && SB_URL!=='https://fmycgssuqyrkpylccsut.supabase.co'){
       fetch(`${SB_URL}/functions/v1/send-pdf`,{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':`Bearer ${SB_KEY}`},
