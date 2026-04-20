@@ -1,6 +1,11 @@
 {
-  "version": 2,
-  "name": "arka-simulator",
-  "builds": [{ "src": "index.html", "use": "@vercel/static" }],
-  "routes": [{ "src": "/(.*)", "dest": "/$1" }]
+  "builds": [
+    { "src": "*.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/profiler", "dest": "/profiler.html" },
+    { "src": "/profiler.html", "dest": "/profiler.html" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
 }
