@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARKA Global Liquidity — Perfilador de Inversión</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAGE0lEQVR4nK2XX2xb5RnGn/f7znfs2D5OS7GdsIoC4gppEqy9oW00eVAmxMVUupqINq06CZCmbZmoxmCTmuSGK/YHqdpkWhSJotg9JqXSqBD/mgoJIcpyta0XqGUIpSRxkqZpe46d8+d7d2E7sWmaxlnfy+P3e/08v+c98mdgPWXbEgC6Tpz4eWbkRK75WbtlrEvA3r0MAGFH9DAxSwA2/lN71m6Jtk/YtgSR7iqVnoSUD7Nh/DAzaj+FIdLroUBtC2AWINKpd0f/SaBuBhjg8szuPT9qfNbOuPYI1N1n7JGfiFR6K4CLBL4o0plH0sXi46D2KbQnoJ49S/MIlGIGX2bwBBkGw1RHmnvuvIC6+/TIyC7E4z9GpUKk9QSFmNDVCiEe60kViz9tl8LaBTScRcwjEAIgAghfQ/AlAgEgQBkDLb13TEDDfbH4OJLJnbpa9cEaCPgSBXwJWkMvLvqUTD6aKhWeaIfC2gQ0HJnqCIhARIJdF8r3v2Hf/4ZdF0QkQASSZlsUbi+g2b1l9bDrBjAMyZ4/Q1NTE8nZ2cvs+9NQSrLrBrCs7d2l0pop3F5Aw4kyBurZazJNgPnfE4cPVy729y+C+V+kFADSIEIoxZoprC6gafMpmdzJrhuCWZCUgA4/W+rT4WckJQAWXKmEsKzta92F1QU0bT6LeiuRYM+D8MOzjTYZemO8uAgQiXrPmnfh1gK+t/nsOBoAQRkCrjsFzzvfaKX5G19ypTIJpQQAalDoXgOFWwto3vxa9gxmTZEog/nD6QMHHDBLjI0Zky+84JLWH1AkwmDWDQqhVLelsLKAuvt7SoXHYFk9dfcSgEAYEPtBAQDwxhsCX31FAMChV6AgoPpMWaOQvC2Fle8DdcWBNAeW3AMakQjxDefrzsnJsRlmApEPAGCm1ODgudlHHr6Ejo4H4HnLFIQaAPDhrSjcTKCR/ffdM2sRiRCFwZsX+/sXMThIXW8f35IZHr4Pg4N0YWjIozA4JiIRqsdQo5BMrvpG3CygoVSqgabsGYYh9bVrC+RUjoNZYGhI69iGF9lK/A5DQxrMQlS9N/W1a1dhGBLMtTkkQKvsQquAFvfJ5uxDEY8T+d7fpg8cKKNUos32nzpYGr2s1DPd+XwMpRJN7ts3C987KuJxAhDWKLghrOT2VGFlCq0Cln/vW7M3TaEXFmbMK1dfA9sSuVzo0b37KR5PUyKxKdi08SByuRDMsqM682e9cLUM0xQA9BKFiLnifWFZQJN7shKt2UejgqqVP0w899wVnEvRluHhKCvjFQ4CZs9jKPP33fl8DOfO0bf7fjkvqtWXRTQilnfBDWFZO1aisCygJXvZyD6kRMLQV+bOlnO9xx+ybRPZbODG478WGzbcD8/T8H0tOju36I0bf4NsNnjIts3pXO+wnpv7mCzLAHNYo0ArUhA3Z2/1sONqMBOUEqhU5o3rziEwiwu5nJc6erQLsejLulLxaohJ60rF43jspbtP5Lsv5HIemIXpVg/BdeaglAAzsetqWNaObtve1UxBtGQvzJp7sIaUmqQkWpjvmzx48Nut4+Pywddfj9AP7jkpM5m7hFKmsCwlrIQSSpkildooEnfbW4YHolvHx+Xlvr4JMb/QR1IQpNQANIRAaMiWN8Kouw/ThcJjSFo97DghhICIxQyemvzt9LN9Z5DPq/Ft2/zNx47dZRiyyN9NvUWkW6/0zg02DMP0xQPx8W3b5pDPq6n9+9/PnDz5K0qnjmrHCdhxArKsHWnb3lUm+ggDAwY17vLpU6OfIpncoavVQMbjJl+Z+2N5z95XMTZmIJsNsJ6qn83YxVeQSr+qHcenaFTi+vXPy7uf3glmQQCQeaeY5UTnJxyGREoBC1dfLO995i8rfDlhbGz1W042GwJYftXqM9K23Y8NnX9l3wcZkjG/8ES5t/djAEDq1OhHXee/4PSZf8ymR0Z2Lx28U1WflS4UfpY+895M1/kvOHVq9CwAUKpUeFpsSo9q13lXfDd1ePr55//7f2FfTUQ2G2SG/34fUptfQzy2R8/O5JCxiyOZ06d/sdS4zr/Za6qm2ZnTo4e67JHi/wC5gzQIrG5TjgAAAABJRU5ErkJggg==">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --t:#00948e;--tl:#00BAB3;--td:rgba(0,148,142,0.06);--tb:rgba(0,186,179,0.11);
+  --bg:#000000;--c1:#080808;--c2:#0d0d0d;
+  --b1:rgba(255,255,255,0.07);--b2:rgba(255,255,255,0.13);
+  --w:#ffffff;--off:#e8eaed;--off2:#b8bcc4;--m:#72787f;--md:#4a4f56;
+  --gr:#4ade80;--gold:#c8a85a;
+  --sans:'Montserrat',sans-serif;
+  --nav-bg:rgba(0,0,0,0.96);
+}
+body.light{
+  --bg:#f5f6f8;--c1:#ffffff;--c2:#f0f1f3;
+  --b1:rgba(0,0,0,0.08);--b2:rgba(0,0,0,0.13);
+  --w:#0d0f11;--off:#1a1d21;--off2:#4a4f56;--m:#8a9099;--md:#c0c5cc;
+  --td:rgba(0,148,142,0.07);--tb:rgba(0,186,179,0.18);
+  --nav-bg:rgba(255,255,255,0.96);
+  --gr:#16a34a;
+}
+body.light nav{background:var(--nav-bg);border-bottom:1px solid var(--b1)}
+body.light .nn{color:var(--w)}
+body.light .card::before{opacity:.15}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--off);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+
+/* NAV TOOL BUTTON */
+.nav-tool-btn{display:flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--m);text-decoration:none;
+  background:var(--c2);border:1px solid var(--b1);border-radius:5px;padding:5px 10px;
+  transition:all .2s}
+.nav-tool-btn:hover{border-color:var(--tl);color:var(--tl);background:var(--td)}
+.nav-tool-btn svg{opacity:.7}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--b1);height:60px;
+  display:flex;align-items:center;padding:0 40px;justify-content:space-between;transition:background .3s}
+.nl{display:flex;align-items:center;gap:14px}
+.nlogo{width:32px;height:32px;object-fit:contain}
+.nn{font-size:.82rem;font-weight:700;letter-spacing:.07em;color:var(--w);transition:color .3s}
+.ns{font-size:.57rem;font-weight:400;letter-spacing:.18em;color:var(--m);text-transform:uppercase;display:block}
+.nibc{font-size:.62rem;color:var(--m);border:1px solid var(--b1);padding:3px 10px;border-radius:3px}
+.nm{font-size:.7rem;color:var(--m);text-decoration:none;transition:color .2s}
+.nm:hover{color:var(--tl)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-sw{display:flex;background:var(--c2);border:1px solid var(--b1);border-radius:5px;overflow:hidden;transition:background .3s}
+.lang-btn{padding:5px 10px;font-size:.62rem;font-weight:700;letter-spacing:.08em;cursor:pointer;border:none;background:transparent;color:var(--m);font-family:var(--sans);transition:all .15s}
+.lang-btn.active{background:var(--t);color:#fff}
+.theme-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--b1);background:var(--c2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s;color:var(--off2)}
+.theme-btn:hover{border-color:var(--tl);background:var(--td)}
+
+/* PAGE */
+.pg{max-width:860px;margin:0 auto;padding:100px 24px 60px}
+
+/* HERO */
+.hero{text-align:center;margin-bottom:52px}
+.hlbl{font-size:.6rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--t);margin-bottom:16px}
+.hh1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px}
+.hh1 em{font-style:normal;color:var(--tl)}
+.hh2{font-size:1rem;font-weight:300;color:var(--m);max-width:520px;margin:0 auto 32px}
+
+/* STEPS */
+.steps{display:flex;align-items:center;justify-content:center;margin-bottom:44px;flex-wrap:wrap;gap:4px}
+.sd{display:flex;align-items:center;gap:8px;font-size:.67rem;font-weight:600;letter-spacing:.06em;color:var(--m);text-transform:uppercase;transition:color .3s}
+.sd.active{color:var(--tl)}.sd.done{color:var(--t)}
+.sn{width:26px;height:26px;border-radius:50%;border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:.6rem;transition:all .3s}
+.sd.active .sn{border-color:var(--t);background:var(--td);color:var(--tl)}
+.sd.done .sn{border-color:var(--t);background:var(--t);color:var(--w)}
+.sl{width:52px;height:1px;background:var(--b1);margin:0 10px;transition:background .3s}
+.sl.done{background:var(--t);opacity:.45}
+
+/* CARD */
+.sec{display:none}
+.sec.active{display:block}
+.card{background:var(--c1);border:1px solid var(--b1);border-radius:14px;padding:36px 40px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--t),var(--tl));opacity:.6}
+.fade{animation:fadeIn .35s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.slbl{font-size:.58rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--t);margin-bottom:8px}
+.stit{font-size:1.4rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.ssub{font-size:.8rem;color:var(--m);font-weight:300;margin-bottom:32px;line-height:1.6}
+
+/* PROGRESS BAR */
+.prog-wrap{margin-bottom:28px}
+.prog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m)}
+.prog-count{font-size:.75rem;font-weight:700;color:var(--tl)}
+.prog-track{height:4px;background:var(--b1);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--t),var(--tl));border-radius:4px;transition:width .4s ease}
+
+/* QUESTION CARD */
+.q-block{margin-bottom:8px}
+.q-num{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--t);margin-bottom:8px}
+.q-text{font-size:1rem;font-weight:600;color:var(--off);margin-bottom:20px;line-height:1.5}
+.q-opts{display:grid;gap:8px}
+.q-opt{background:var(--c2);border:1px solid var(--b1);border-radius:8px;padding:14px 18px;cursor:pointer;font-family:var(--sans);font-size:.82rem;font-weight:400;color:var(--off2);text-align:left;transition:all .18s;display:flex;align-items:flex-start;gap:12px;position:relative;overflow:hidden}
+.q-opt::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--t);transform:scaleY(0);transition:transform .18s}
+.q-opt:hover{border-color:rgba(0,186,179,.3);color:var(--off);background:var(--td)}
+.q-opt.sel{border-color:var(--t);background:var(--td);color:var(--tl);font-weight:600}
+.q-opt.sel::before{transform:scaleY(1)}
+.q-letter{width:22px;height:22px;border-radius:50%;border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;flex-shrink:0;margin-top:1px;transition:all .18s}
+.q-opt.sel .q-letter{background:var(--t);border-color:var(--t);color:#fff}
+
+/* NAV BUTTONS */
+.ar{display:flex;justify-content:flex-end;gap:10px;margin-top:28px}
+.btn{display:flex;align-items:center;gap:7px;padding:11px 22px;border-radius:7px;font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:.05em;cursor:pointer;border:none;transition:all .2s}
+.bp{background:var(--t);color:#fff}.bp:hover{background:var(--tl)}
+.bp:disabled{opacity:.5;cursor:not-allowed}
+.bg2{background:var(--c2);color:var(--off2);border:1px solid var(--b1)}.bg2:hover{border-color:var(--b2);color:var(--off)}
+.bfw{width:100%;justify-content:center;padding:14px}
+.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RESULT */
+.profile-badge{text-align:center;padding:32px 0 24px}
+.pb-label{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--m);margin-bottom:10px}
+.pb-name{font-size:2rem;font-weight:900;letter-spacing:-.02em;margin-bottom:6px}
+.pb-desc{font-size:.85rem;font-weight:300;color:var(--m);max-width:480px;margin:0 auto}
+.score-ring{width:120px;height:120px;margin:0 auto 24px;position:relative}
+.score-ring svg{transform:rotate(-90deg)}
+.score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-val{font-size:1.6rem;font-weight:900;color:var(--tl);line-height:1}
+.score-lbl{font-size:.55rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m);margin-top:2px}
+
+/* ALLOCATION */
+.alloc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+.alloc-card{background:var(--c2);border:1px solid var(--b1);border-radius:10px;padding:18px 20px;position:relative;overflow:hidden}
+.alloc-card.highlight{border-color:rgba(0,186,179,.35);background:var(--td)}
+.alloc-pct{font-size:2rem;font-weight:900;color:var(--tl);letter-spacing:-.03em;line-height:1}
+.alloc-name{font-size:.75rem;font-weight:700;color:var(--off);margin:4px 0 2px}
+.alloc-rate{font-size:.7rem;color:var(--m)}
+.alloc-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--t),var(--tl))}
+.alloc-full{grid-column:1/-1}
+
+/* RISK METERS */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0}
+.risk-item{background:var(--c2);border:1px solid var(--b1);border-radius:8px;padding:14px 16px}
+.risk-lbl{font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:8px}
+.risk-track{height:5px;background:var(--b1);border-radius:5px;overflow:hidden;margin-bottom:6px}
+.risk-fill{height:100%;border-radius:5px;transition:width .8s ease}
+.risk-val{font-size:.72rem;font-weight:700;color:var(--off)}
+
+/* RECOMMENDATIONS */
+.rec-list{margin:20px 0}
+.rec-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--b1)}
+.rec-item:last-child{border-bottom:none}
+.rec-icon{width:28px;height:28px;border-radius:6px;background:var(--td);border:1px solid rgba(0,186,179,.2);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.rec-title{font-size:.8rem;font-weight:700;color:var(--off);margin-bottom:2px}
+.rec-body{font-size:.75rem;font-weight:300;color:var(--m);line-height:1.5}
+
+/* LEAD FORM */
+.lw{background:var(--c1);border:1px solid var(--b1);border-radius:14px;padding:36px 40px;position:relative;overflow:hidden}
+.lw::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--t),var(--tl));opacity:.6}
+.lt{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;line-height:1.2}
+.lb{font-size:.82rem;color:var(--m);font-weight:300;margin-bottom:28px;line-height:1.6}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.lf{grid-column:1/-1}
+.fld label{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m);display:block;margin-bottom:7px}
+.fld input,.fld select{width:100%;background:var(--c2);border:1px solid var(--b1);border-radius:7px;padding:10px 14px;color:var(--off);font-family:var(--sans);font-size:.82rem;outline:none;transition:border-color .2s}
+.fld input:focus,.fld select:focus{border-color:var(--t)}
+.ck{display:flex;align-items:flex-start;gap:10px;font-size:.75rem;color:var(--m);cursor:pointer;margin-bottom:20px}
+.ck input{margin-top:2px;accent-color:var(--t)}
+.ck a{color:var(--tl);text-decoration:none}
+.succ{display:none;align-items:center;gap:12px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:8px;padding:14px 18px;margin-top:16px}
+.succ.show{display:flex}
+.sico{width:28px;height:28px;border-radius:50%;background:rgba(74,222,128,.15);display:flex;align-items:center;justify-content:center;color:var(--gr);font-weight:900;flex-shrink:0}
+.smt{font-size:.8rem;font-weight:700;color:var(--off)}
+.smb{font-size:.72rem;color:var(--m)}
+
+/* DISC */
+.disc{font-size:.65rem;color:var(--md);line-height:1.6;padding:20px 0;border-top:1px solid var(--b1);margin-top:32px}
+
+/* FOOTER */
+footer{text-align:center;padding:24px;font-size:.65rem;color:var(--md);border-top:1px solid var(--b1)}
+footer a{color:var(--m);text-decoration:none}
+
+/* CHART */
+.chart-wrap{background:var(--c2);border:1px solid var(--b1);border-radius:10px;padding:20px;margin:20px 0;position:relative;height:220px}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  nav{padding:0 20px}.pg{padding:80px 16px 40px}
+  .card,.lw{padding:24px 20px}
+  .alloc-grid{grid-template-columns:1fr 1fr}
+  .risk-grid{grid-template-columns:1fr 1fr}
+  .lg{grid-template-columns:1fr}
+  .lf{grid-column:1}
+  .steps{gap:4px}.sl{width:24px;margin:0 4px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nl">
+    <img src="data:image/png;base64,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" alt="ARKA" class="nlogo">
+    <div>
+      <div class="nn">Alpha Fund</div>
+      <span class="ns">Perfilador de Inversión</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <div class="lang-sw">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="index.html" class="nav-tool-btn" title="Simulador de Portafolio">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span data-i="nav_simulator">Simulador</span>
+    </a>
+    <span class="nibc">IBC No. 2025-00568 · Santa Lucía</span>
+    <a href="mailto:contacto@arkaltd.io" class="nm">contacto@arkaltd.io</a>
+  </div>
+</nav>
+
+<div class="pg">
+
+<!-- HERO -->
+<div class="hero fade">
+  <div class="hlbl" data-i="hero_label">Hedge Fund · Capital Institucional · Mercados Globales</div>
+  <h1 class="hh1" data-i="hero_h1">Alpha Fund<br><em>Perfilador de Inversión</em></h1>
+  <p class="hh2" data-i="hero_h2">Responde 10 preguntas y recibe tu propuesta de asignación de capital personalizada.</p>
+</div>
+
+<!-- STEPS -->
+<div class="steps d3 fade">
+  <div class="sd active" id="d1"><div class="sn">01</div><span data-i="step1_lbl">Cuestionario</span></div>
+  <div class="sl" id="l1"></div>
+  <div class="sd" id="d2"><div class="sn">02</div><span data-i="step2_lbl">Tu Perfil</span></div>
+  <div class="sl" id="l2"></div>
+  <div class="sd" id="d3"><div class="sn">03</div><span data-i="step3_lbl">Propuesta PDF</span></div>
+</div>
+
+<!-- ══ STEP 1: QUESTIONNAIRE ══ -->
+<div class="sec active" id="step1">
+<div class="card fade">
+  <div class="slbl" data-i="s1_label">Cuestionario</div>
+  <div class="stit" data-i="s1_title">Perfil del Inversionista</div>
+  <div class="ssub" data-i="s1_sub">Selecciona la opción que mejor describe tu situación. No hay respuestas correctas o incorrectas.</div>
+
+  <div class="prog-wrap">
+    <div class="prog-header">
+      <span class="prog-label" data-i="prog_label">Progreso</span>
+      <span class="prog-count" id="progCount">1 / 10</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:10%"></div></div>
+  </div>
+
+  <div id="qContainer"></div>
+
+  <div class="ar">
+    <button class="btn bg2" id="prevBtn" onclick="prevQ()" style="display:none">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span data-i="btn_prev">Anterior</span>
+    </button>
+    <button class="btn bp" id="nextBtn" onclick="nextQ()" disabled>
+      <span id="nextLabel" data-i="btn_next">Siguiente</span>
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- ══ STEP 2: RESULTS ══ -->
+<div class="sec" id="step2">
+<div class="card fade">
+  <div class="slbl" data-i="s2_label">Tu Perfil</div>
+  <div class="stit" data-i="s2_title">Resultado del Perfilador</div>
+
+  <!-- Profile badge -->
+  <div class="profile-badge">
+    <div class="score-ring">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+        <circle id="scoreCircle" cx="60" cy="60" r="50" fill="none" stroke="#00BAB3" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"/>
+      </svg>
+      <div class="score-num">
+        <div class="score-val" id="scoreVal">0</div>
+        <div class="score-lbl">pts</div>
+      </div>
+    </div>
+    <div class="pb-label" data-i="profile_label">Perfil de Riesgo</div>
+    <div class="pb-name" id="profileName">—</div>
+    <div class="pb-desc" id="profileDesc">—</div>
+  </div>
+
+  <!-- Allocation -->
+  <div class="slbl" style="margin-top:24px" data-i="alloc_title">Propuesta de Asignación de Capital</div>
+  <div class="alloc-grid" id="allocGrid"></div>
+
+  <!-- Risk analysis -->
+  <div class="slbl" style="margin-top:24px" data-i="risk_title">Análisis de Riesgo</div>
+  <div class="risk-grid" id="riskGrid"></div>
+
+  <!-- Projection chart -->
+  <div class="slbl" style="margin-top:24px" data-i="proj_title">Proyección Estimada (10 años)</div>
+  <div class="chart-wrap"><canvas id="profChart"></canvas></div>
+
+  <!-- Recommendations -->
+  <div class="slbl" style="margin-top:24px" data-i="rec_title">Recomendaciones Estratégicas</div>
+  <div class="rec-list" id="recList"></div>
+
+  <div class="ar">
+    <button class="btn bg2" onclick="go(1)">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span data-i="btn_retake">Repetir</span>
+    </button>
+    <button class="btn bp" onclick="go(3)">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span data-i="btn_getpdf">Obtener Propuesta PDF</span>
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- ══ STEP 3: LEAD + PDF ══ -->
+<div class="sec" id="step3">
+<div class="lw fade">
+  <div class="slbl" data-i="s3_label">Propuesta Institucional</div>
+  <div class="lt" data-i="s3_title">Descarga tu<br>Propuesta Personalizada</div>
+  <p class="lb" data-i="s3_sub">Un PDF institucional con tu perfil de riesgo, propuesta de asignación de capital y proyección de rendimientos.</p>
+  <div class="lg">
+    <div class="fld lf"><label data-i="lbl_name">Nombre Completo</label><input type="text" id="fN" placeholder="Tu nombre completo"></div>
+    <div class="fld"><label data-i="lbl_email">Correo Electrónico</label><input type="email" id="fE" placeholder="correo@empresa.com"></div>
+    <div class="fld"><label data-i="lbl_wa">WhatsApp (con lada)</label><input type="tel" id="fW" placeholder="+52 442 000 0000"></div>
+    <div class="fld lf">
+      <label data-i="lbl_amount">Capital Disponible para Invertir</label>
+      <select id="fA">
+        <option value="">Seleccionar rango</option>
+        <option>$5,000 – $25,000 USD</option>
+        <option>$25,000 – $100,000 USD</option>
+        <option>$100,000 – $500,000 USD</option>
+        <option>$500,000+ USD</option>
+      </select>
+    </div>
+  </div>
+  <label class="ck"><input type="checkbox" id="fCo"><span data-i="consent_txt">Acepto los <a href="#">términos de privacidad</a> y autorizo a ARKA Global Liquidity contactarme.</span></label>
+  <button class="btn bp bfw" id="dlBtn" onclick="handleLead()">
+    <div class="spin" id="dSpin"></div>
+    <svg id="dIcon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <span data-i="dl_btn">Descargar Propuesta PDF</span>
+  </button>
+  <div class="succ" id="sb2">
+    <div class="sico">✓</div>
+    <div><div class="smt" data-i="succ_t">Propuesta generada y descargada</div><div class="smb" data-i="succ_b">Un asesor ARKA te contactará en las próximas 24 horas.</div></div>
+  </div>
+</div>
+<div class="ar" style="margin-top:14px">
+  <button class="btn bg2" onclick="go(2)">
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    <span data-i="btn_back">Ver Perfil</span>
+  </button>
+</div>
+<div class="disc"><strong>AVISO LEGAL:</strong> Este perfilador es una herramienta educativa. Los resultados son orientativos y no constituyen asesoría financiera certificada. Los rendimientos proyectados no garantizan resultados futuros. ARKA Global Liquidity Ltd., IBC No. 2025-00568, Santa Lucía.</div>
+</div>
+
+</div><!-- /pg -->
+
+<footer>
+  <span style="color:var(--tl)">ARKA GLOBAL LIQUIDITY LTD.</span>&nbsp;·&nbsp;IBC No. 2025-00568&nbsp;·&nbsp;<a href="mailto:contacto@arkaltd.io">contacto@arkaltd.io</a>&nbsp;·&nbsp;<a href="https://arkaglobalinvestments.com" target="_blank">arkaglobalinvestments.com</a>
+</footer>
+
+<script>
+const SB_URL='https://fmycgssuqyrkpylccsut.supabase.co', SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZteWNnc3N1cXlya3B5bGNjc3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MjUwNzYsImV4cCI6MjA5MDUwMTA3Nn0.8DNU139iE3RO_1qVabnBp2vJa673IU23y7LSzQVzFOA';
+const TG_TOKEN='8482266610:AAF3GIUeLqCtt1Rp9hys8eIHZP_btXetNpA';
+const TG_CHATS=['188610921','-5125313014'];
+let sb=null, lang='es', isDark=true;
+let currentQ=0, answers=[], PROFILE=null;
+
+window.addEventListener('DOMContentLoaded',()=>{
+  if(SB_URL.includes('supabase.co')){try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}}
+  const saved=localStorage.getItem('arka_theme');
+  if(saved==='light'){isDark=false;document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️';}
+  renderQ(0);
+});
+
+/* ── QUESTIONS ── */
+const QUESTIONS = {
+  es:[
+    {
+      cat:'Experiencia',
+      text:'¿Cuál es tu experiencia invirtiendo en mercados financieros?',
+      opts:['Ninguna — es mi primera vez considerando invertir','Básica — he invertido en CETES, fondos o depósitos bancarios','Intermedia — conozco acciones, ETFs o fondos de inversión','Avanzada — tengo experiencia en divisas, derivados o CFDs','Sofisticado — opero activamente en múltiples mercados']
+    },
+    {
+      cat:'Conocimiento',
+      text:'¿Cómo describirías tu conocimiento sobre instrumentos financieros de riesgo?',
+      opts:['No los conozco, prefiero instrumentos de bajo riesgo','Los conozco teóricamente pero no los he utilizado','Los comprendo y he realizado algunas operaciones','Los entiendo bien y los utilizo regularmente','Tengo conocimiento avanzado y estrategias propias']
+    },
+    {
+      cat:'Objetivos',
+      text:'¿Cuál es tu objetivo principal al invertir?',
+      opts:['Preservar mi capital, sin importar los rendimientos','Obtener rendimientos ligeramente superiores al banco','Crecer mi patrimonio de forma constante a largo plazo','Generar rendimientos significativos aceptando mayor riesgo','Maximizar rendimientos, estoy dispuesto a asumir alta volatilidad']
+    },
+    {
+      cat:'Horizonte',
+      text:'¿En cuánto tiempo podrías necesitar este capital?',
+      opts:['Menos de 6 meses — podría necesitarlo pronto','Entre 6 y 12 meses','Entre 1 y 3 años','Entre 3 y 5 años','Más de 5 años — es capital de largo plazo']
+    },
+    {
+      cat:'Tolerancia',
+      text:'Si tu portafolio pierde un 15% de su valor en un mes, ¿qué harías?',
+      opts:['Retiraría todo de inmediato para evitar más pérdidas','Retiraría una parte para reducir la exposición','Esperaría sin hacer nada hasta que se recupere','Mantendría la inversión y evaluaría en 3-6 meses','Aprovecharía para invertir más capital a precios bajos']
+    },
+    {
+      cat:'Tolerancia',
+      text:'¿Cuál es el nivel de pérdida máxima que podrías tolerar en tu inversión?',
+      opts:['0% — no acepto ninguna pérdida','Hasta 5% — pérdida mínima','Hasta 15% — pérdida moderada','Hasta 30% — pérdida significativa','Más del 30% — acepto alta volatilidad por mayores rendimientos']
+    },
+    {
+      cat:'Capacidad',
+      text:'¿Qué porcentaje de tu patrimonio total representaría esta inversión?',
+      opts:['Más del 75% — es casi todo mi patrimonio','Entre 50% y 75%','Entre 25% y 50%','Entre 10% y 25%','Menos del 10% — es una parte pequeña de mi patrimonio']
+    },
+    {
+      cat:'Capacidad',
+      text:'¿Tienes ingresos estables y recurrentes además de esta inversión?',
+      opts:['No, dependería parcialmente de los rendimientos para vivir','Tengo ingresos básicos pero variables','Sí, tengo ingresos estables que cubren mis gastos básicos','Sí, tengo ingresos estables con capacidad de ahorro mensual','Sí, tengo múltiples fuentes de ingreso y alta capacidad de ahorro']
+    },
+    {
+      cat:'Sofisticación',
+      text:'¿Has invertido o conoces estrategias cuantitativas o algorítmicas?',
+      opts:['No conozco este tipo de estrategias','He escuchado sobre ellas pero no las comprendo bien','Las entiendo en términos generales','Las comprendo y he utilizado fondos o productos basados en ellas','Las utilizo o he desarrollado estrategias propias']
+    },
+    {
+      cat:'Liquidez',
+      text:'¿Qué tan importante es para ti tener liquidez (acceso rápido a tu dinero)?',
+      opts:['Muy importante — podría necesitarlo en cualquier momento','Importante — prefiero acceso en menos de 30 días','Moderada — puedo esperar 1-3 meses sin problema','Baja — puedo comprometer el capital por 6-12 meses','No es prioridad — busco rendimiento sobre liquidez']
+    },
+  ],
+  en:[
+    {
+      cat:'Experience',
+      text:'What is your experience investing in financial markets?',
+      opts:['None — this is my first time considering investing','Basic — I\'ve invested in government bonds, funds, or deposits','Intermediate — I know stocks, ETFs, or investment funds','Advanced — I have experience with FX, derivatives, or CFDs','Sophisticated — I actively trade across multiple markets']
+    },
+    {
+      cat:'Knowledge',
+      text:'How would you describe your knowledge of high-risk financial instruments?',
+      opts:['I don\'t know them, I prefer low-risk instruments','I know them theoretically but haven\'t used them','I understand them and have made some trades','I understand them well and use them regularly','I have advanced knowledge and my own strategies']
+    },
+    {
+      cat:'Objectives',
+      text:'What is your main investment objective?',
+      opts:['Preserve my capital regardless of returns','Earn slightly better returns than a bank account','Grow my wealth consistently over the long term','Generate significant returns while accepting higher risk','Maximize returns — I\'m willing to accept high volatility']
+    },
+    {
+      cat:'Horizon',
+      text:'How soon might you need this capital?',
+      opts:['Less than 6 months — I might need it soon','Between 6 and 12 months','Between 1 and 3 years','Between 3 and 5 years','More than 5 years — this is long-term capital']
+    },
+    {
+      cat:'Tolerance',
+      text:'If your portfolio loses 15% in one month, what would you do?',
+      opts:['Withdraw everything immediately to avoid further losses','Withdraw a portion to reduce exposure','Wait without doing anything until it recovers','Hold the investment and reassess in 3-6 months','Take advantage and invest more capital at lower prices']
+    },
+    {
+      cat:'Tolerance',
+      text:'What is the maximum loss you could tolerate on your investment?',
+      opts:['0% — I accept no losses','Up to 5% — minimal loss','Up to 15% — moderate loss','Up to 30% — significant loss','More than 30% — I accept high volatility for higher returns']
+    },
+    {
+      cat:'Capacity',
+      text:'What percentage of your total net worth would this investment represent?',
+      opts:['More than 75% — it\'s almost all my wealth','Between 50% and 75%','Between 25% and 50%','Between 10% and 25%','Less than 10% — it\'s a small part of my wealth']
+    },
+    {
+      cat:'Capacity',
+      text:'Do you have stable, recurring income in addition to this investment?',
+      opts:['No, I would partially depend on returns to live','I have basic but variable income','Yes, I have stable income covering basic expenses','Yes, I have stable income with monthly savings capacity','Yes, I have multiple income sources and high savings capacity']
+    },
+    {
+      cat:'Sophistication',
+      text:'Have you invested in or do you know quantitative or algorithmic strategies?',
+      opts:['I\'m not familiar with these strategies','I\'ve heard about them but don\'t understand them well','I understand them in general terms','I understand them and have used funds or products based on them','I use or have developed my own strategies']
+    },
+    {
+      cat:'Liquidity',
+      text:'How important is liquidity (quick access to your money) to you?',
+      opts:['Very important — I might need it at any time','Important — I prefer access within 30 days','Moderate — I can wait 1-3 months without issue','Low — I can commit capital for 6-12 months','Not a priority — I seek returns over liquidity']
+    },
+  ]
+};
+
+/* ── PROFILES ── */
+const PROFILES=[
+  {
+    id:'conservative',
+    es:{name:'Conservador',desc:'Prioridad absoluta en preservación de capital. Baja tolerancia al riesgo, horizonte corto y necesidad de liquidez.',color:'#6b9dfc'},
+    en:{name:'Conservative',desc:'Absolute priority on capital preservation. Low risk tolerance, short horizon and need for liquidity.',color:'#6b9dfc'},
+    alloc:[{pct:80,strat:'Foundation',rate:18,highlight:true},{pct:15,strat:'Strategic Growth',rate:24},{pct:5,strat:'Alpha Force',rate:36}],
+    risk:{volatility:49,drawdown:42,sharpe:90},
+    recs:{
+      es:['Iniciar con el 30-40% del capital disponible y escalar gradualmente','Estrategia Foundation como base: 18% anual con control estricto de drawdown','Liquidez semanal disponible en porción conservadora','Horizonte mínimo recomendado: 6-12 meses','Revisión mensual del portafolio con tu asesor ARKA'],
+      en:['Start with 30-40% of available capital and scale gradually','Foundation strategy as base: 18% annual with strict drawdown control','Weekly liquidity available on conservative portion','Minimum recommended horizon: 6-12 months','Monthly portfolio review with your ARKA advisor']
+    },
+    minScore:0, maxScore:19
+  },
+  {
+    id:'moderate-low',
+    es:{name:'Moderado – Bajo',desc:'Equilibrio entre seguridad y crecimiento. Acepta baja volatilidad a cambio de rendimientos superiores al mercado.',color:'#7cb9e8'},
+    en:{name:'Moderate – Low',desc:'Balance between security and growth. Accepts low volatility in exchange for above-market returns.',color:'#7cb9e8'},
+    alloc:[{pct:60,strat:'Foundation',rate:18,highlight:true},{pct:30,strat:'Strategic Growth',rate:24},{pct:10,strat:'Alpha Force',rate:36}],
+    risk:{volatility:56,drawdown:50,sharpe:88},
+    recs:{
+      es:['Asignación 60/30/10 equilibrada entre las tres estrategias ARKA','Escalar hasta el 50% del capital disponible en la primera fase','Horizonte recomendado: 12-24 meses para optimizar rendimientos','Aportaciones mensuales opcionales para aprovechar el interés compuesto','Revisión trimestral de la asignación según desempeño'],
+      en:['Balanced 60/30/10 allocation across all three ARKA strategies','Scale up to 50% of available capital in the first phase','Recommended horizon: 12-24 months to optimize returns','Optional monthly contributions to leverage compound interest','Quarterly allocation review based on performance']
+    },
+    minScore:20, maxScore:29
+  },
+  {
+    id:'moderate',
+    es:{name:'Moderado',desc:'Perfil balanceado. Busca crecimiento sostenido aceptando volatilidad controlada. Perfil más común entre inversionistas sofisticados.',color:'#00BAB3'},
+    en:{name:'Moderate',desc:'Balanced profile. Seeks sustained growth while accepting controlled volatility. Most common among sophisticated investors.',color:'#00BAB3'},
+    alloc:[{pct:50,strat:'Strategic Growth',rate:24,highlight:true},{pct:30,strat:'Foundation',rate:18},{pct:20,strat:'Alpha Force',rate:36}],
+    risk:{volatility:68,drawdown:63,sharpe:78},
+    recs:{
+      es:['Strategic Growth como estrategia principal: 24% anual','Iniciar con 40-60% del capital y escalar según desempeño trimestral','Horizonte óptimo: 12-36 meses','Rebalanceo semestral para mantener la asignación objetivo','Posibilidad de escalar Alpha Force si el desempeño lo justifica'],
+      en:['Strategic Growth as main strategy: 24% annual','Start with 40-60% of capital and scale based on quarterly performance','Optimal horizon: 12-36 months','Semi-annual rebalancing to maintain target allocation','Option to increase Alpha Force if performance justifies it']
+    },
+    minScore:30, maxScore:37
+  },
+  {
+    id:'moderate-high',
+    es:{name:'Moderado – Alto',desc:'Alta orientación al crecimiento. Acepta volatilidad significativa en busca de rendimientos superiores. Inversionista activo y sofisticado.',color:'#c8a85a'},
+    en:{name:'Moderate – High',desc:'High growth orientation. Accepts significant volatility in pursuit of superior returns. Active and sophisticated investor.',color:'#c8a85a'},
+    alloc:[{pct:50,strat:'Alpha Force',rate:36,highlight:true},{pct:30,strat:'Strategic Growth',rate:24},{pct:20,strat:'Foundation',rate:18}],
+    risk:{volatility:79,drawdown:77,sharpe:78},
+    recs:{
+      es:['Alpha Force como estrategia dominante: 36% anual con modelos algorítmicos','Capital comprometido por mínimo 12 meses para optimizar rendimientos','Estrategia Foundation como colchón de seguridad (20%)','Escalar gradualmente hasta el 75% del capital disponible','Monitoreo semanal de métricas clave con dashboard de ARKA'],
+      en:['Alpha Force as dominant strategy: 36% annual with algorithmic models','Capital committed for minimum 12 months to optimize returns','Foundation strategy as safety cushion (20%)','Gradually scale to 75% of available capital','Weekly monitoring of key metrics via ARKA dashboard']
+    },
+    minScore:38, maxScore:44
+  },
+  {
+    id:'aggressive',
+    es:{name:'Agresivo',desc:'Máxima orientación al rendimiento. Alta tolerancia al riesgo, capital comprometido a largo plazo. Perfil de inversionista institucional avanzado.',color:'#e87070'},
+    en:{name:'Aggressive',desc:'Maximum return orientation. High risk tolerance, capital committed long-term. Advanced institutional investor profile.',color:'#e87070'},
+    alloc:[{pct:70,strat:'Alpha Force',rate:36,highlight:true},{pct:20,strat:'Strategic Growth',rate:24},{pct:10,strat:'Foundation',rate:18}],
+    risk:{volatility:88,drawdown:87,sharpe:77},
+    recs:{
+      es:['Alpha Force como estrategia principal: 70% de la asignación total','Capital de largo plazo: mínimo 24 meses para maximizar el efecto compuesto','Capacidad para escalar hasta el 100% del capital objetivo','Acceso a reportes de desempeño institucional en tiempo real','Reuniones trimestrales con el equipo cuantitativo de ARKA'],
+      en:['Alpha Force as primary strategy: 70% of total allocation','Long-term capital: minimum 24 months to maximize compound effect','Ability to scale to 100% of target capital','Access to real-time institutional performance reports','Quarterly meetings with ARKA\'s quantitative team']
+    },
+    minScore:45, maxScore:50
+  }
+];
+
+/* ── SCORING ── (0-4 per question, some reversed) */
+// Q scores: 0=most conservative, 4=most aggressive
+const SCORE_MAP=[
+  [0,1,2,3,4], // Q1 experience
+  [0,1,2,3,4], // Q2 knowledge
+  [0,1,2,3,4], // Q3 objectives
+  [0,1,2,3,4], // Q4 horizon
+  [0,1,2,3,4], // Q5 tolerance reaction
+  [0,1,2,3,4], // Q6 tolerance loss
+  [4,3,2,1,0], // Q7 capacity % (reversed: higher % = more conservative)
+  [0,1,2,3,4], // Q8 income
+  [0,1,2,3,4], // Q9 sophistication
+  [4,3,2,1,0], // Q10 liquidity (reversed: more liquidity need = conservative)
+];
+
+function calcScore(){
+  return answers.reduce((sum,ans,i)=>sum+(SCORE_MAP[i]?.[ans]??0),0);
+}
+
+function getProfile(score){
+  return PROFILES.find(p=>score>=p.minScore&&score<=p.maxScore)||PROFILES[2];
+}
+
+/* ── RENDER QUESTION ── */
+function renderQ(idx){
+  const qs=QUESTIONS[lang];
+  const q=qs[idx];
+  const total=qs.length;
+  document.getElementById('progCount').textContent=`${idx+1} / ${total}`;
+  document.getElementById('progFill').style.width=`${((idx+1)/total)*100}%`;
+  document.getElementById('prevBtn').style.display=idx>0?'flex':'none';
+  const nextLabel=document.getElementById('nextLabel');
+  nextLabel.setAttribute('data-i',idx===total-1?'btn_finish':'btn_next');
+  nextLabel.textContent=lang==='en'?(idx===total-1?'See My Profile':'Next'):(idx===total-1?'Ver Mi Perfil':'Siguiente');
+
+  const letters=['A','B','C','D','E'];
+  document.getElementById('qContainer').innerHTML=`
+    <div class="q-block">
+      <div class="q-num">${lang==='en'?'Question':'Pregunta'} ${idx+1} · ${q.cat}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-opts">
+        ${q.opts.map((o,i)=>`
+          <button class="q-opt${answers[idx]===i?' sel':''}" onclick="selectOpt(${i})">
+            <div class="q-letter">${letters[i]}</div>
+            <span>${o}</span>
+          </button>`).join('')}
+      </div>
+    </div>`;
+
+  document.getElementById('nextBtn').disabled=answers[idx]===undefined;
+}
+
+function selectOpt(i){
+  answers[currentQ]=i;
+  document.querySelectorAll('.q-opt').forEach((el,idx)=>{
+    el.classList.toggle('sel',idx===i);
+  });
+  document.getElementById('nextBtn').disabled=false;
+}
+
+function nextQ(){
+  const total=QUESTIONS[lang].length;
+  if(currentQ<total-1){
+    currentQ++;
+    renderQ(currentQ);
+  } else {
+    computeProfile();
+  }
+}
+
+function prevQ(){
+  if(currentQ>0){currentQ--;renderQ(currentQ);}
+}
+
+/* ── COMPUTE PROFILE ── */
+function computeProfile(){
+  const score=calcScore();
+  const prof=getProfile(score);
+  PROFILE={score,prof};
+  renderProfile(score,prof);
+  go(2);
+}
+
+function renderProfile(score,prof){
+  const isEn=lang==='en';
+  const pdata=isEn?prof.en:prof.es;
+
+  // Score ring animation
+  document.getElementById('scoreVal').textContent=score;
+  const pct=score/50;
+  const circumference=314;
+  const offset=circumference-(pct*circumference);
+  setTimeout(()=>{
+    const circle=document.getElementById('scoreCircle');
+    circle.style.strokeDashoffset=offset;
+    circle.style.stroke=pdata.color;
+    circle.style.transition='stroke-dashoffset 1.2s ease';
+  },100);
+
+  // Profile name
+  document.getElementById('profileName').textContent=pdata.name;
+  document.getElementById('profileName').style.color=pdata.color;
+  document.getElementById('profileDesc').textContent=pdata.desc;
+
+  // Allocation cards
+  const allocHTML=prof.alloc.map(a=>`
+    <div class="alloc-card${a.highlight?' highlight alloc-full':''}">
+      <div class="alloc-pct">${a.pct}%</div>
+      <div class="alloc-name">ARKA ${a.strat}</div>
+      <div class="alloc-rate">${a.rate}% ${isEn?'annual':'anual'}</div>
+      <div class="alloc-bar" style="width:${a.pct}%;max-width:100%"></div>
+    </div>`).join('');
+  document.getElementById('allocGrid').innerHTML=allocHTML;
+
+  // Risk meters with real % values
+  const riskRealData={
+    'conservative':  {vol:8.2, dd:6.2},
+    'moderate-low':  {vol:9.5, dd:7.5},
+    'moderate':      {vol:11.5,dd:9.5},
+    'moderate-high': {vol:13.5,dd:11.5},
+    'aggressive':    {vol:15.0,dd:13.0},
+  };
+  const rd=riskRealData[prof.id]||{vol:0,dd:0};
+  const riskLabels=isEn
+    ?[`Volatility (${rd.vol}%)`,`Max Drawdown (${rd.dd}%)`,`Risk/Return`]
+    :[`Volatilidad (${rd.vol}%)`,`Drawdown Máx. (${rd.dd}%)`,`Riesgo/Retorno`];
+  const riskColors=['#e87070','#c8a85a','#4ade80'];
+  document.getElementById('riskGrid').innerHTML=Object.entries(prof.risk).map(([k,v],i)=>`
+    <div class="risk-item">
+      <div class="risk-lbl">${riskLabels[i]}</div>
+      <div class="risk-track"><div class="risk-fill" style="width:${v}%;background:${riskColors[i]}"></div></div>
+      <div class="risk-val">${v}/100</div>
+    </div>`).join('');
+
+  // Chart
+  drawProfileChart(prof);
+
+  // Recommendations
+  const recs=isEn?prof.recs.en:prof.recs.es;
+  const icons=['📊','🎯','⏱️','📈','🤝'];
+  const titles=isEn
+    ?['Asset Allocation','Capital Deployment','Investment Horizon','Growth Strategy','Institutional Support']
+    :['Asignación de Activos','Despliegue de Capital','Horizonte de Inversión','Estrategia de Crecimiento','Apoyo Institucional'];
+  document.getElementById('recList').innerHTML=recs.map((r,i)=>`
+    <div class="rec-item">
+      <div class="rec-icon">${icons[i]}</div>
+      <div>
+        <div class="rec-title">${titles[i]}</div>
+        <div class="rec-body">${r}</div>
+      </div>
+    </div>`).join('');
+}
+
+let profChart=null;
+function drawProfileChart(prof){
+  const isEn=lang==='en';
+  const light=document.body.classList.contains('light');
+  const gridCol=light?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.025)';
+  const tickCol=light?'#8a9099':'#3a3f47';
+  if(profChart)profChart.destroy();
+  const years=10;
+  const labels=Array.from({length:years+1},(_,i)=>i===0?(isEn?'Today':'Hoy'):`${isEn?'Year':'Año'} ${i}`);
+  const base=100000;
+  // Simulate allocation growth
+  function sim(pcts,rates){
+    let arr=[base];let b=base;
+    for(let y=1;y<=years;y++){
+      let growth=0;
+      pcts.forEach((p,i)=>{growth+=p/100*rates[i]/100;});
+      b=b*(1+growth);arr.push(Math.round(b));
+    }
+    return arr;
+  }
+  const rates=prof.alloc.map(a=>a.rate);
+  const pcts=prof.alloc.map(a=>a.pct);
+  const conservative=sim([100,0,0],[18,24,36]);
+  const yours=sim(pcts,rates);
+  const ctx=document.getElementById('profChart').getContext('2d');
+  profChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[
+      {label:isEn?'Your Profile':'Tu Perfil',data:yours,borderColor:'#00BAB3',backgroundColor:'rgba(0,186,179,0.08)',fill:true,borderWidth:2.5,tension:.4,pointRadius:0,pointHoverRadius:5},
+      {label:'Foundation 18%',data:conservative,borderColor:light?'#9ca3af':'#2a2e38',backgroundColor:'transparent',borderWidth:1.5,borderDash:[5,3],tension:.4,pointRadius:0},
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{position:'top',labels:{color:light?'#4a4f56':'#565b63',font:{family:"'Montserrat'",size:10,weight:'600'},usePointStyle:true,boxWidth:7,padding:16}},
+        tooltip:{backgroundColor:light?'rgba(255,255,255,.97)':'rgba(0,0,0,.96)',titleColor:'#00BAB3',bodyColor:light?'#1a1d21':'#d2d5d9',borderColor:'rgba(0,186,179,.18)',borderWidth:1,padding:10,callbacks:{label:c=>` ${c.dataset.label}: $${c.parsed.y.toLocaleString()}`}}
+      },
+      scales:{
+        x:{grid:{color:gridCol},ticks:{color:tickCol,font:{family:"'Montserrat'",size:9}}},
+        y:{grid:{color:gridCol},ticks:{color:tickCol,font:{family:"'Montserrat'",size:9},callback:v=>'$'+(v>=1e6?(v/1e6).toFixed(1)+'M':v.toLocaleString())}}
+      }
+    }
+  });
+}
+
+/* ── NAVIGATION ── */
+function go(n){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  const sec=document.getElementById('step'+n);
+  sec.classList.add('active');
+  sec.classList.remove('fade');void sec.offsetWidth;sec.classList.add('fade');
+  for(let i=1;i<=3;i++){
+    const d=document.getElementById('d'+i),l=document.getElementById('l'+i);
+    d.classList.remove('active','done');if(l)l.classList.remove('done');
+    if(i<n){d.classList.add('done');if(l)l.classList.add('done');}
+    else if(i===n)d.classList.add('active');
+  }
+  if(n===1){currentQ=0;answers=[];renderQ(0);}
+  document.getElementById('d'+n).scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── LEAD + PDF ── */
+async function handleLead(){
+  const nm=document.getElementById('fN').value.trim();
+  const em=document.getElementById('fE').value.trim();
+  const wa=document.getElementById('fW').value.trim();
+  const am=document.getElementById('fA').value;
+  const co=document.getElementById('fCo').checked;
+  if(!nm||!em||!wa||!co){alert(lang==='en'?'Please complete all fields and accept terms.':'Por favor completa todos los campos y acepta los términos.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert(lang==='en'?'Please enter a valid email.':'Ingresa un correo electrónico válido.');return;}
+  const btn=document.getElementById('dlBtn'),sp=document.getElementById('dSpin'),ic=document.getElementById('dIcon');
+  btn.disabled=true;sp.style.display='block';ic.style.display='none';
+  // Save to Supabase
+  try{
+    if(sb){await sb.from('profiles').upsert({
+      name:nm,email:em,whatsapp:wa,amount_range:am,
+      profile_id:PROFILE.prof.id,
+      profile_name:(lang==='en'?PROFILE.prof.en:PROFILE.prof.es).name,
+      score:PROFILE.score,
+      alloc_foundation:PROFILE.prof.alloc.find(a=>a.strat==='Foundation')?.pct||0,
+      alloc_growth:PROFILE.prof.alloc.find(a=>a.strat==='Strategic Growth')?.pct||0,
+      alloc_alpha:PROFILE.prof.alloc.find(a=>a.strat==='Alpha Force')?.pct||0,
+      created_at:new Date().toISOString()
+    },{onConflict:'email'});}
+  }catch(e){console.warn(e);}
+  // Telegram
+  await sendTelegram(nm,em,wa,am);
+  // PDF
+  try{
+    const pdfB64=await buildProfilePDF(nm);
+    if(pdfB64&&SB_URL.includes('supabase.co')){
+      fetch(`${SB_URL}/functions/v1/send-pdf`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':`Bearer ${SB_KEY}`},
+        body:JSON.stringify({
+          name:nm,email:em,pdfBase64:pdfB64,
+          strategy:(lang==='en'?PROFILE.prof.en:PROFILE.prof.es).name,
+          capital:am,years:'—',currency:'—'
+        })
+      }).catch(e=>console.warn('Email:',e));
+    }
+  }catch(e){console.error(e);}
+  btn.disabled=false;sp.style.display='none';ic.style.display='';
+  document.getElementById('sb2').classList.add('show');
+}
+
+async function sendTelegram(nm,em,wa,am){
+  const prof=(lang==='en'?PROFILE.prof.en:PROFILE.prof.es);
+  const alloc=PROFILE.prof.alloc.map(a=>`${a.pct}% ${a.strat} (${a.rate}%)`).join(' · ');
+  const fecha=new Date().toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
+  const txt=`🎯 *Nuevo Perfil — ARKA Alpha Fund*\n\n👤 ${nm}\n📧 ${em}\n📱 ${wa}\n💰 ${am||'No especificado'}\n\n📊 *Perfil:* ${prof.name} (${PROFILE.score}/50 pts)\n📈 *Asignación:* ${alloc}\n\n🕐 ${fecha}`;
+  for(const chat of TG_CHATS){
+    try{await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat,text:txt,parse_mode:'Markdown'})});}
+    catch(e){console.warn(e);}
+  }
+}
+
+/* ── PDF GENERATION ── */
+async function buildProfilePDF(clientName){
+  const{jsPDF}=window.jspdf;
+  const W=210,H=297,M=18,CW=W-M*2;
+  const isEn=lang==='en';
+  const prof=PROFILE.prof;
+  const pdata=isEn?prof.en:prof.es;
+  const score=PROFILE.score;
+
+  const WHITE=[255,255,255],CARD=[244,245,246],LINE=[224,226,228];
+  const TEAL=[0,148,142],TEALBG=[232,246,244];
+  const G10=[26,26,26],G30=[74,79,86],G50=[114,120,127],G70=[176,181,188];
+  const FOOT_H=20;
+
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const sf=(bold,sz,col)=>{doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(sz);doc.setTextColor(...col);};
+  let y=0,pageNum=1;
+
+  const drawHeader=()=>{
+    doc.setFillColor(...WHITE);doc.rect(0,0,W,H,'F');
+    doc.setFillColor(...G10);doc.rect(0,H-14,W,14,'F');// footer bg first
+    doc.setFillColor(...G10);doc.rect(0,0,W,14,'F');
+    doc.setFillColor(...TEAL);doc.rect(0,0,2,14,'F');
+    doc.setDrawColor(...LINE);doc.setLineWidth(0.4);doc.line(0,14,W,14);
+    sf('bold',8.5,WHITE);doc.text('Alpha Fund',M+2,8);
+    sf('normal',5,G70);doc.text(`ARKA Global Liquidity — ${isEn?'Investment Profile Report':'Informe de Perfil de Inversión'}`,M+2,12.5);
+    sf('normal',5,G70);doc.text(`${isEn?'Prepared for':'Preparado para'}: ${clientName}`,W-M,8,{align:'right'});
+    const dateStr=new Date().toLocaleDateString(isEn?'en-US':'es-MX',{year:'numeric',month:'long',day:'numeric'});
+    doc.text(`IBC No. 2025-00568 · ${isEn?'Saint Lucia':'Santa Lucía'} · ${dateStr}`,W-M,12.5,{align:'right'});
+  };
+
+  const drawFooter=()=>{
+    doc.setFillColor(...G10);doc.rect(0,H-FOOT_H,W,FOOT_H,'F');
+    doc.setDrawColor(...TEAL);doc.setLineWidth(0.4);doc.line(0,H-FOOT_H,W,H-FOOT_H);
+    sf('normal',4.2,G70);
+    const disc=isEn?'DISCLAIMER: This profile is for informational purposes only and does not constitute certified financial advice. Projected returns do not guarantee future results. ARKA Global Liquidity Ltd., IBC No. 2025-00568, Saint Lucia.':'AVISO: Este perfil es informativo y no constituye asesoría financiera certificada. Los rendimientos proyectados no garantizan resultados futuros. ARKA Global Liquidity Ltd., IBC No. 2025-00568, Santa Lucía.';
+    const lines=doc.splitTextToSize(disc,CW);
+    lines.slice(0,2).forEach((l,i)=>doc.text(l,M,H-FOOT_H+5+i*4.5));
+    sf('bold',5.5,TEAL);doc.text('ARKA GLOBAL LIQUIDITY LTD.  ·  contacto@arkaltd.io  ·  arkaglobalinvestments.com',W/2,H-3,{align:'center'});
+  };
+
+  const CONTENT_TOP=17,CONTENT_FLOOR=H-FOOT_H-4;
+  const check=(needed)=>{
+    if(y+needed>CONTENT_FLOOR){
+      drawFooter();doc.addPage();pageNum++;drawHeader();
+      doc.setFillColor(...WHITE);doc.rect(0,0,W,H,'F');
+      y=CONTENT_TOP+4;
+    }
+  };
+  const sh=(title)=>{
+    check(12);
+    doc.setFillColor(...CARD);doc.roundedRect(M,y,CW,6,1,1,'F');
+    doc.setFillColor(...TEAL);doc.roundedRect(M,y,1.5,6,0,0,'F');
+    sf('bold',5.5,G30);doc.text(title,M+4,y+4.2);y+=9;
+  };
+
+  drawHeader();y=CONTENT_TOP+4;
+
+  // ── PROFILE BADGE ──────────────────────────────────
+  check(40);
+  doc.setFillColor(...G10);doc.roundedRect(M,y,CW,36,2,2,'F');
+  doc.setDrawColor(...TEAL);doc.setLineWidth(0.4);doc.roundedRect(M,y,CW,36,2,2,'D');
+  sf('bold',5,G70);doc.text((isEn?'Risk Profile':'Perfil de Riesgo').toUpperCase(),W/2,y+7,{align:'center'});
+  sf('bold',18,TEAL);doc.text(pdata.name,W/2,y+18,{align:'center'});
+  sf('normal',6,G50);doc.text(pdata.desc,W/2,y+25,{align:'center'});
+  sf('bold',7,G70);doc.text(`${isEn?'Score':'Puntaje'}: ${score}/50 pts`,W/2,y+32,{align:'center'});
+  y+=40;
+
+  // ── ALLOCATION ─────────────────────────────────────
+  sh(isEn?'CAPITAL ALLOCATION PROPOSAL':'PROPUESTA DE ASIGNACIÓN DE CAPITAL');
+  const colW=(CW-4)/3;
+  prof.alloc.forEach((a,i)=>{
+    const kx=M+i*(colW+2);
+    doc.setFillColor(...(a.highlight?TEALBG:CARD));
+    doc.setDrawColor(...(a.highlight?TEAL:LINE));doc.setLineWidth(a.highlight?0.4:0.25);
+    doc.roundedRect(kx,y,colW,18,1.5,1.5,'FD');
+    sf('bold',12,a.highlight?TEAL:G30);doc.text(`${a.pct}%`,kx+colW/2,y+8,{align:'center'});
+    sf('bold',5.5,G50);doc.text(`ARKA ${a.strat}`,kx+colW/2,y+13,{align:'center'});
+    sf('normal',4.5,G70);doc.text(`${a.rate}% ${isEn?'annual':'anual'}`,kx+colW/2,y+17,{align:'center'});
+  });
+  y+=22;
+
+  // ── RISK ANALYSIS ──────────────────────────────────
+  sh(isEn?'RISK ANALYSIS':'ANÁLISIS DE RIESGO');
+  const riskData={
+    'conservative':   {vol:8.2, dd:6.2},
+    'moderate-low':   {vol:9.5, dd:7.5},
+    'moderate':       {vol:11.5,dd:9.5},
+    'moderate-high':  {vol:13.5,dd:11.5},
+    'aggressive':     {vol:15.0,dd:13.0},
+  };
+  const rd=riskData[prof.id]||{vol:0,dd:0};
+  const riskLabels=isEn
+    ?[`Volatility (${rd.vol}%)`,`Max Drawdown (${rd.dd}%)`,`Risk/Return Ratio`]
+    :[`Volatilidad (${rd.vol}%)`,`Drawdown Máx. (${rd.dd}%)`,`Ratio Riesgo/Retorno`];
+  const riskVals=Object.values(prof.risk);
+  const rColW=(CW-4)/3;
+  riskVals.forEach((v,i)=>{
+    const rx=M+i*(rColW+2);
+    doc.setFillColor(...CARD);doc.roundedRect(rx,y,rColW,14,1,1,'F');
+    sf('bold',5,G50);doc.text(riskLabels[i],rx+rColW/2,y+5,{align:'center'});
+    doc.setFillColor(LINE[0],LINE[1],LINE[2]);doc.roundedRect(rx+3,y+7,rColW-6,3,1,1,'F');
+    const fillColor=i===0?[232,112,112]:i===1?[200,168,90]:[74,222,128];
+    doc.setFillColor(...fillColor);doc.roundedRect(rx+3,y+7,(rColW-6)*v/100,3,1,1,'F');
+    sf('bold',5.5,G30);doc.text(`${v}/100`,rx+rColW/2,y+13.5,{align:'center'});
+  });
+  y+=18;
+
+  // ── RECOMMENDATIONS ────────────────────────────────
+  sh(isEn?'STRATEGIC RECOMMENDATIONS':'RECOMENDACIONES ESTRATÉGICAS');
+  const recs=isEn?prof.recs.en:prof.recs.es;
+  const recTitles=isEn?['Asset Allocation','Capital Deployment','Investment Horizon','Growth Strategy','Institutional Support']:['Asignación de Activos','Despliegue de Capital','Horizonte de Inversión','Estrategia de Crecimiento','Apoyo Institucional'];
+  recs.forEach((r,i)=>{
+    check(10);
+    if(i%2===0){doc.setFillColor(...CARD);doc.rect(M,y-2,CW,8,'F');}
+    sf('bold',5.5,TEAL);doc.text(`${i+1}. ${recTitles[i]}`,M+3,y+1.5);
+    sf('normal',5,G50);
+    const lines=doc.splitTextToSize(r,CW-30);
+    doc.text(lines[0],M+50,y+1.5);
+    y+=8;
+  });
+  y+=4;
+
+  // ── PROJECTION TABLE ───────────────────────────────
+  sh(isEn?'10-YEAR PROJECTION (BASE $100,000)':'PROYECCIÓN A 10 AÑOS (BASE $100,000)');
+  check(10);
+  const pxs=[M,M+24,M+70,M+118];
+  const pHdrs=isEn?['Year','Your Profile','Foundation 18%','Difference']:['Año','Tu Perfil','Foundation 18%','Diferencia'];
+  sf('bold',5,G70);pHdrs.forEach((h,i)=>doc.text(h,pxs[i],y));
+  y+=2;doc.setDrawColor(...LINE);doc.setLineWidth(0.25);doc.line(M,y,W-M,y);y+=5;
+  // Simulate
+  function simYr(pcts,rates,yr){
+    let b=100000;
+    const avgRate=pcts.reduce((s,p,i)=>s+p/100*rates[i]/100,0);
+    return Math.round(100000*Math.pow(1+avgRate,yr));
+  }
+  const rates=prof.alloc.map(a=>a.rate);
+  const pcts=prof.alloc.map(a=>a.pct);
+  for(let yr=1;yr<=10;yr++){
+    check(7);
+    if(yr%2===0){doc.setFillColor(...CARD);doc.rect(M,y-2,CW,5.5,'F');}
+    const yourVal=simYr(pcts,rates,yr);
+    const baseVal=simYr([100,0,0],[18,24,36],yr);
+    const diff=yourVal-baseVal;
+    sf('normal',5.5,G50);doc.text(`${isEn?'Year':'Año'} ${yr}`,pxs[0],y);
+    sf('bold',5.5,TEAL);doc.text(`$${yourVal.toLocaleString()}`,pxs[1],y);
+    sf('normal',5.5,G30);doc.text(`$${baseVal.toLocaleString()}`,pxs[2],y);
+    sf('bold',5.5,diff>0?[74,222,128]:[232,112,112]);doc.text(`${diff>0?'+':''}$${diff.toLocaleString()}`,pxs[3],y);
+    y+=5.5;
+  }
+  y+=5;
+
+  // ── ONBOARDING ─────────────────────────────────────
+  sh(isEn?'ONBOARDING PROCESS':'PROCESO DE ONBOARDING');
+  const steps=isEn
+    ?[['01','Account Application','Submit the opening request via the ARKA Global Liquidity platform.'],
+      ['02','KYC / KYB Verification','Identity, address verification, document validation and source of funds.'],
+      ['03','AML Compliance','Anti-Money Laundering controls and internal compliance review.'],
+      ['04','Account Creation','Individual account with real-time visibility of capital and activity.'],
+      ['05','Strategy Assignment','Capital allocated based on your risk profile and allocation proposal.'],
+      ['06','Portfolio Access','Live dashboard to monitor capital, operations and portfolio evolution.']]
+    :[['01','Solicitud de Apertura','Completar la solicitud en la plataforma digital de ARKA Global Liquidity.'],
+      ['02','Verificación KYC / KYB','Identidad, domicilio, validación documental y verificación de origen de fondos.'],
+      ['03','Cumplimiento AML','Controles Anti-Money Laundering y validaciones internas de cumplimiento.'],
+      ['04','Creación de Cuenta','Cuenta individual con visibilidad en tiempo real de capital y actividad.'],
+      ['05','Asignación de Estrategia','Capital asignado según tu perfil de riesgo y propuesta de asignación.'],
+      ['06','Acceso al Portafolio','Panel en vivo con monitoreo de capital, actividad y evolución del portafolio.']];
+  steps.forEach(([num,title,desc])=>{
+    check(7);
+    doc.setFillColor(...CARD);doc.rect(M,y-2,CW,6,'F');
+    doc.setFillColor(...TEAL);doc.roundedRect(M,y-2,6,5.5,1,1,'F');
+    sf('bold',5,[255,255,255]);doc.text(num,M+3,y+1.8,{align:'center'});
+    sf('bold',5.5,G10);doc.text(title,M+8,y+1.8);
+    sf('normal',5,G50);doc.text(doc.splitTextToSize(desc,CW-44)[0],M+44,y+1.8);
+    y+=6;
+  });
+
+  drawFooter();
+  const pdfBytes=doc.output('datauristring');
+  const b64=pdfBytes.split(',')[1];
+  doc.save(`ARKA_Perfil_${pdata.name.replace(/\s/g,'_')}_${new Date().toISOString().slice(0,10)}.pdf`);
+  return b64;
+}
+
+/* ── THEME ── */
+function toggleTheme(){
+  isDark=!isDark;
+  document.body.classList.toggle('light',!isDark);
+  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('arka_theme',isDark?'dark':'light');
+  if(PROFILE)drawProfileChart(PROFILE.prof);
+}
+
+/* ── i18n ── */
+const T={
+  es:{nav_simulator:'Simulador',
+    hero_label:'Hedge Fund · Capital Institucional · Mercados Globales',hero_h1:'Alpha Fund<br><em>Perfilador de Inversión</em>',hero_h2:'Responde 10 preguntas y recibe tu propuesta de asignación de capital personalizada.',step1_lbl:'Cuestionario',step2_lbl:'Tu Perfil',step3_lbl:'Propuesta PDF',s1_label:'Cuestionario',s1_title:'Perfil del Inversionista',s1_sub:'Selecciona la opción que mejor describe tu situación. No hay respuestas correctas o incorrectas.',prog_label:'Progreso',btn_prev:'Anterior',btn_next:'Siguiente',btn_finish:'Ver Mi Perfil',s2_label:'Tu Perfil',s2_title:'Resultado del Perfilador',profile_label:'Perfil de Riesgo',alloc_title:'Propuesta de Asignación de Capital',risk_title:'Análisis de Riesgo',proj_title:'Proyección Estimada (10 años)',rec_title:'Recomendaciones Estratégicas',btn_retake:'Repetir',btn_getpdf:'Obtener Propuesta PDF',s3_label:'Propuesta Institucional',s3_title:'Descarga tu<br>Propuesta Personalizada',s3_sub:'Un PDF institucional con tu perfil de riesgo, propuesta de asignación de capital y proyección de rendimientos.',lbl_name:'Nombre Completo',lbl_email:'Correo Electrónico',lbl_wa:'WhatsApp (con lada)',lbl_amount:'Capital Disponible para Invertir',consent_txt:'Acepto los <a href="#">términos de privacidad</a> y autorizo a ARKA Global Liquidity contactarme.',dl_btn:'Descargar Propuesta PDF',succ_t:'Propuesta generada y descargada',succ_b:'Un asesor ARKA te contactará en las próximas 24 horas.',btn_back:'Ver Perfil'},
+  en:{nav_simulator:'Simulator',
+    hero_label:'Hedge Fund · Institutional Capital · Global Markets',hero_h1:'Alpha Fund<br><em>Investment Profiler</em>',hero_h2:'Answer 10 questions and receive your personalized capital allocation proposal.',step1_lbl:'Questionnaire',step2_lbl:'Your Profile',step3_lbl:'PDF Proposal',s1_label:'Questionnaire',s1_title:'Investor Profile',s1_sub:'Select the option that best describes your situation. There are no right or wrong answers.',prog_label:'Progress',btn_prev:'Previous',btn_next:'Next',btn_finish:'See My Profile',s2_label:'Your Profile',s2_title:'Profiler Results',profile_label:'Risk Profile',alloc_title:'Capital Allocation Proposal',risk_title:'Risk Analysis',proj_title:'Estimated Projection (10 years)',rec_title:'Strategic Recommendations',btn_retake:'Retake',btn_getpdf:'Get PDF Proposal',s3_label:'Institutional Proposal',s3_title:'Download your<br>Personalized Proposal',s3_sub:'An institutional PDF with your risk profile, capital allocation proposal and return projections.',lbl_name:'Full Name',lbl_email:'Email Address',lbl_wa:'WhatsApp (with country code)',lbl_amount:'Available Capital to Invest',consent_txt:'I accept the <a href="#">privacy terms</a> and authorize ARKA Global Liquidity to contact me.',dl_btn:'Download PDF Proposal',succ_t:'Proposal generated and downloaded',succ_b:'An ARKA advisor will contact you within 24 hours.',btn_back:'Back to Profile'}
+};
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    const k=el.getAttribute('data-i');
+    if(T[l][k]!==undefined)el.innerHTML=T[l][k];
+  });
+  if(currentQ>=0)renderQ(currentQ);
+  if(PROFILE)renderProfile(PROFILE.score,PROFILE.prof);
+}
+</script>
+</body>
+</html>
