@@ -814,37 +814,52 @@ async function handleLead(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert(lang==='en'?'Please enter a valid email.':'Ingresa un correo electrónico válido.');return;}
   const btn=document.getElementById('dlBtn'),sp=document.getElementById('dSpin'),ic=document.getElementById('dIcon');
   btn.disabled=true;sp.style.display='block';ic.style.display='none';
+  console.log('handleLead started — SB_URL:', SB_URL, 'PROFILE:', !!PROFILE);
   // Save to Supabase
   try{
-    if(sb){await sb.from('profiles').upsert({
-      name:nm,email:em,whatsapp:wa,amount_range:am,
-      profile_id:PROFILE.prof.id,
-      profile_name:(lang==='en'?PROFILE.prof.en:PROFILE.prof.es).name,
-      score:PROFILE.score,
-      alloc_foundation:PROFILE.prof.alloc.find(a=>a.strat==='Foundation')?.pct||0,
-      alloc_growth:PROFILE.prof.alloc.find(a=>a.strat==='Strategic Growth')?.pct||0,
-      alloc_alpha:PROFILE.prof.alloc.find(a=>a.strat==='Alpha Force')?.pct||0,
-      created_at:new Date().toISOString()
-    },{onConflict:'email'});}
-  }catch(e){console.warn(e);}
+    if(sb){
+      console.log('Saving to Supabase...');
+      await sb.from('profiles').upsert({
+        name:nm,email:em,whatsapp:wa,amount_range:am,
+        profile_id:PROFILE.prof.id,
+        profile_name:(lang==='en'?PROFILE.prof.en:PROFILE.prof.es).name,
+        score:PROFILE.score,
+        alloc_foundation:PROFILE.prof.alloc.find(a=>a.strat==='Foundation')?.pct||0,
+        alloc_growth:PROFILE.prof.alloc.find(a=>a.strat==='Strategic Growth')?.pct||0,
+        alloc_alpha:PROFILE.prof.alloc.find(a=>a.strat==='Alpha Force')?.pct||0,
+        created_at:new Date().toISOString()
+      },{onConflict:'email'});
+      console.log('Supabase saved');
+    } else { console.warn('Supabase not initialized'); }
+  }catch(e){console.warn('Supabase error:',e);}
   // Telegram
   const capitalExacto=document.getElementById('fCapital').value;
+  console.log('Sending Telegram...');
   await sendTelegram(nm,em,wa,am,capitalExacto);
+  console.log('Telegram done');
   // PDF
   try{
+    console.log('Building PDF...');
     const pdfB64=await buildProfilePDF(nm);
+    console.log('PDF built, b64 length:', pdfB64?pdfB64.length:'NULL');
+    console.log('SB_URL includes supabase.co:', SB_URL.includes('supabase.co'));
     if(pdfB64&&SB_URL.includes('supabase.co')){
-      fetch(`${SB_URL}/functions/v1/send-pdf`,{
+      console.log('Sending email to:', em);
+      const emailRes=await fetch(`${SB_URL}/functions/v1/send-pdf`,{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':`Bearer ${SB_KEY}`},
         body:JSON.stringify({
           name:nm,email:em,pdfBase64:pdfB64,
           strategy:(lang==='en'?PROFILE.prof.en:PROFILE.prof.es).name,
-          capital:capitalExacto||am,years:'—',currency:curr||'USD'
+          capital:capitalExacto||am,years:'—',currency:'USD'
         })
-      }).catch(e=>console.warn('Email:',e));
+      });
+      const emailData=await emailRes.json();
+      console.log('Email response:', JSON.stringify(emailData));
+    } else {
+      console.warn('Email skipped — pdfB64:', !!pdfB64, 'SB configured:', SB_URL.includes('supabase.co'));
     }
-  }catch(e){console.error(e);}
+  }catch(e){console.error('PDF/Email error:',e);}
   btn.disabled=false;sp.style.display='none';ic.style.display='';
   document.getElementById('sb2').classList.add('show');
 }
