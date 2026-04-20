@@ -869,7 +869,7 @@ async function sendTelegram(nm,em,wa,am,capital){
   const prof=(lang==='en'?PROFILE.prof.en:PROFILE.prof.es);
   const alloc=PROFILE.prof.alloc.map(a=>`${a.pct}% ${a.strat} (${a.rate}%)`).join(' | ');
   const fecha=new Date().toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
-  const capStr=capital?`$${Number(capital).toLocaleString('en-US')} ${curr||'USD'}`:(am||'No especificado');
+  const capStr=capital?`$${Number(capital).toLocaleString('en-US')} USD`:(am||'No especificado');
   const txt=`Nuevo Perfil ARKA Alpha Fund\n\n👤 ${nm}\n📧 ${em}\n📱 ${wa}\n💰 Capital: ${capStr}\n\n📊 Perfil: ${prof.name} (${PROFILE.score}/50 pts)\n📈 Asignación: ${alloc}\n\n🕐 ${fecha}`;
   for(const chat of TG_CHATS){
     try{
