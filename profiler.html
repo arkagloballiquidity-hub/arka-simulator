@@ -750,7 +750,11 @@ function drawProfileChart(prof){
   if(profChart)profChart.destroy();
   const years=10;
   const labels=Array.from({length:years+1},(_,i)=>i===0?(isEn?'Today':'Hoy'):`${isEn?'Year':'Año'} ${i}`);
-  const base=100000;
+  // Use real capital from form if available
+  const capInput=document.getElementById('fCapital');
+  const realCap=capInput&&capInput.value&&!isNaN(Number(capInput.value))&&Number(capInput.value)>=1000
+    ?Number(capInput.value):100000;
+  const base=realCap;
   // Simulate allocation growth
   function sim(pcts,rates){
     let arr=[base];let b=base;
@@ -840,7 +844,7 @@ async function handleLead(){
   // PDF
   try{
     console.log('Building PDF...');
-    const pdfB64=await buildProfilePDF(nm);
+    const pdfB64=await buildProfilePDF(nm, capitalExacto);
     console.log('PDF built, b64 length:', pdfB64?pdfB64.length:'NULL');
     console.log('SB_URL includes supabase.co:', SB_URL.includes('supabase.co'));
     if(pdfB64&&SB_URL.includes('supabase.co')){
@@ -884,7 +888,7 @@ async function sendTelegram(nm,em,wa,am,capital){
 }
 
 /* ── PDF GENERATION ── */
-async function buildProfilePDF(clientName){
+async function buildProfilePDF(clientName, clientCapital){
   const{jsPDF}=window.jspdf;
   const W=210,H=297,M=18,CW=W-M*2;
   const isEn=lang==='en';
@@ -985,10 +989,21 @@ async function buildProfilePDF(clientName){
     doc.setFillColor(...CARD);doc.roundedRect(rx,y,rColW,14,1,1,'F');
     sf('bold',5,G50);doc.text(riskLabels[i],rx+rColW/2,y+5,{align:'center'});
     doc.setFillColor(LINE[0],LINE[1],LINE[2]);doc.roundedRect(rx+3,y+7,rColW-6,3,1,1,'F');
-    const fillColor=i===0?[232,112,112]:i===1?[200,168,90]:[74,222,128];
+    const profileFillColors={
+      'conservative':  [[107,157,252],[124,185,232],[74,222,128]],
+      'moderate-low':  [[124,185,232],[0,186,179],[74,222,128]],
+      'moderate':      [[0,186,179],[200,168,90],[74,222,128]],
+      'moderate-high': [[200,168,90],[232,164,86],[74,222,128]],
+      'aggressive':    [[232,112,112],[200,168,90],[74,222,128]],
+    };
+    const fillColor=(profileFillColors[prof.id]||profileFillColors['moderate'])[i];
     doc.setFillColor(...fillColor);doc.roundedRect(rx+3,y+7,(rColW-6)*v/100,3,1,1,'F');
-    const rDesc=['Muy Baja/Bajo','Baja/Bajo','Moderada','Alta','Muy Alta'];
-    const rDescVal=v<=25?rDesc[0]:v<=45?rDesc[1]:v<=65?rDesc[2]:v<=80?rDesc[3]:rDesc[4];
+    const rDescVol=isEn?['Controlled','Low','Moderate','Elevated','High']:['Controlada','Baja','Moderada','Elevada','Alta'];
+    const rDescDD=isEn?['Very Low','Low','Moderate','High','Very High']:['Muy Bajo','Bajo','Moderado','Alto','Muy Alto'];
+    const rDescSh=isEn?['Standard','Good','Very Good','Excellent','Optimal']:['Estándar','Bueno','Muy Bueno','Excelente','Óptimo'];
+    const rDescSets=[rDescVol,rDescDD,rDescSh];
+    const rDescArr=rDescSets[i]||rDescVol;
+    const rDescVal=v<=25?rDescArr[0]:v<=45?rDescArr[1]:v<=65?rDescArr[2]:v<=80?rDescArr[3]:rDescArr[4];
     sf('bold',5.5,G30);doc.text(rDescVal,rx+rColW/2,y+13.5,{align:'center'});
   });
   y+=18;
@@ -1009,17 +1024,19 @@ async function buildProfilePDF(clientName){
   y+=4;
 
   // ── PROJECTION TABLE ───────────────────────────────
-  sh(isEn?'10-YEAR PROJECTION (BASE $100,000)':'PROYECCIÓN A 10 AÑOS (BASE $100,000)');
+  sh(isEn?`10-YEAR PROJECTION (BASE ${simBaseLabel})`:`PROYECCIÓN A 10 AÑOS (BASE ${simBaseLabel})`);
   check(10);
   const pxs=[M,M+24,M+70,M+118];
   const pHdrs=isEn?['Year','Your Profile','Foundation 18%','Difference']:['Año','Tu Perfil','Foundation 18%','Diferencia'];
   sf('bold',5,G70);pHdrs.forEach((h,i)=>doc.text(h,pxs[i],y));
   y+=2;doc.setDrawColor(...LINE);doc.setLineWidth(0.25);doc.line(M,y,W-M,y);y+=5;
-  // Simulate
+  // Use real capital if provided, else default $100,000
+  const simBase=clientCapital&&!isNaN(Number(clientCapital))&&Number(clientCapital)>=1000
+    ?Number(clientCapital):100000;
+  const simBaseLabel=`$${simBase.toLocaleString('en-US')}`;
   function simYr(pcts,rates,yr){
-    let b=100000;
     const avgRate=pcts.reduce((s,p,i)=>s+p/100*rates[i]/100,0);
-    return Math.round(100000*Math.pow(1+avgRate,yr));
+    return Math.round(simBase*Math.pow(1+avgRate,yr));
   }
   const rates=prof.alloc.map(a=>a.rate);
   const pcts=prof.alloc.map(a=>a.pct);
