@@ -1024,16 +1024,16 @@ async function buildProfilePDF(clientName, clientCapital){
   y+=4;
 
   // ── PROJECTION TABLE ───────────────────────────────
+  // Use real capital if provided, else default $100,000
+  const simBase=clientCapital&&!isNaN(Number(clientCapital))&&Number(clientCapital)>=1000
+    ?Number(clientCapital):100000;
+  const simBaseLabel=`$${simBase.toLocaleString('en-US')}`;
   sh(isEn?`10-YEAR PROJECTION (BASE ${simBaseLabel})`:`PROYECCIÓN A 10 AÑOS (BASE ${simBaseLabel})`);
   check(10);
   const pxs=[M,M+24,M+70,M+118];
   const pHdrs=isEn?['Year','Your Profile','Foundation 18%','Difference']:['Año','Tu Perfil','Foundation 18%','Diferencia'];
   sf('bold',5,G70);pHdrs.forEach((h,i)=>doc.text(h,pxs[i],y));
   y+=2;doc.setDrawColor(...LINE);doc.setLineWidth(0.25);doc.line(M,y,W-M,y);y+=5;
-  // Use real capital if provided, else default $100,000
-  const simBase=clientCapital&&!isNaN(Number(clientCapital))&&Number(clientCapital)>=1000
-    ?Number(clientCapital):100000;
-  const simBaseLabel=`$${simBase.toLocaleString('en-US')}`;
   function simYr(pcts,rates,yr){
     const avgRate=pcts.reduce((s,p,i)=>s+p/100*rates[i]/100,0);
     return Math.round(simBase*Math.pow(1+avgRate,yr));
