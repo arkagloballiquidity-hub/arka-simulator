@@ -249,6 +249,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
   .as-label{font-size:.68rem}
 }
 
+/* CROSS-NAV BAR */
+.cross-nav{display:flex;justify-content:center;margin-bottom:32px}
+.cross-btn{display:inline-flex;align-items:center;gap:8px;
+  background:var(--c1);border:1px solid var(--b1);border-radius:24px;
+  padding:10px 20px;text-decoration:none;color:var(--off2);
+  font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:.06em;
+  transition:all .2s}
+.cross-btn:hover{border-color:var(--tl);color:var(--tl);background:var(--td)}
+.cross-icon{font-size:1rem}
+.cross-label-es,.cross-label-en{text-transform:uppercase;letter-spacing:.1em}
+
+/* HIDE ON MOBILE */
+@media(max-width:640px){
+  .hide-mobile{display:none!important}
+}
+
 /* MODE BUTTONS */
 .mode-btn{display:flex;align-items:center;gap:10px;flex:1;
   background:var(--c2);border:1px solid var(--b1);border-radius:8px;
@@ -472,15 +488,10 @@ input[type=number]{-moz-appearance:textfield}
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
-    <a href="profiler.html" class="nav-tool-btn" title="Perfilador de Inversión">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      <span data-i="nav_profiler">Perfilador</span>
-    </a>
-    <span class="nibc">IBC No. 2025-00568 · Santa Lucía</span>
-    <a href="mailto:contacto@arkaltd.io" class="nm">contacto@arkaltd.io</a>
+    <span class="nibc hide-mobile">IBC No. 2025-00568 · Santa Lucía</span>
+    <a href="mailto:contacto@arkaltd.io" class="nm hide-mobile">contacto@arkaltd.io</a>
   </div>
 </nav>
-
 <div class="pg">
 
 <!-- ══ HERO ══════════════════════════════════ -->
@@ -514,6 +525,17 @@ input[type=number]{-moz-appearance:textfield}
 </div><!-- /hero -->
 
 <!-- STEPS -->
+
+<!-- CROSS-NAV BAR -->
+<div class="cross-nav fade">
+  <a href="profiler.html" class="cross-btn">
+    <span class="cross-icon">🎯</span>
+    <span class="cross-label-es">Perfilador</span>
+    <span class="cross-label-en" style="display:none">Profiler</span>
+    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+</div>
+
 <div class="steps d3 fade">
   <div class="sd active" id="d1"><div class="sn">01</div><span data-i="step1_lbl">Parámetros</span></div>
   <div class="sl" id="l1"></div>
@@ -1569,6 +1591,9 @@ function setLang(l) {
   lang = l;
   document.getElementById('btn-es').classList.toggle('active', l==='es');
   document.getElementById('btn-en').classList.toggle('active', l==='en');
+  // Toggle cross-nav label language
+  document.querySelectorAll('.cross-label-es').forEach(el=>el.style.display=l==='es'?'':'none');
+  document.querySelectorAll('.cross-label-en').forEach(el=>el.style.display=l==='en'?'':'none');
   document.querySelectorAll('[data-i]').forEach(el => {
     const key = el.getAttribute('data-i');
     const val = T[l][key];

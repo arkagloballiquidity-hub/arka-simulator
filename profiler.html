@@ -70,6 +70,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
 .hh1 em{font-style:normal;color:var(--tl)}
 .hh2{font-size:1rem;font-weight:300;color:var(--m);max-width:520px;margin:0 auto 32px}
 
+/* CROSS-NAV BAR */
+.cross-nav{display:flex;justify-content:center;margin-bottom:32px}
+.cross-btn{display:inline-flex;align-items:center;gap:8px;
+  background:var(--c1);border:1px solid var(--b1);border-radius:24px;
+  padding:10px 22px;text-decoration:none;color:var(--off2);
+  font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;transition:all .2s}
+.cross-btn:hover{border-color:var(--tl);color:var(--tl);background:var(--td)}
+.cross-icon{font-size:1rem;line-height:1}
+.cross-label-es,.cross-label-en{letter-spacing:.1em}
+
+/* HIDE ON MOBILE */
+@media(max-width:640px){
+  .hide-mobile{display:none!important}
+}
+
 /* STEPS */
 .steps{display:flex;align-items:center;justify-content:center;margin-bottom:44px;flex-wrap:wrap;gap:4px}
 .sd{display:flex;align-items:center;gap:8px;font-size:.67rem;font-weight:600;letter-spacing:.06em;color:var(--m);text-transform:uppercase;transition:color .3s}
@@ -216,15 +232,10 @@ footer a{color:var(--m);text-decoration:none}
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
-    <a href="index.html" class="nav-tool-btn" title="Simulador de Portafolio">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      <span data-i="nav_simulator">Simulador</span>
-    </a>
-    <span class="nibc">IBC No. 2025-00568 · Santa Lucía</span>
-    <a href="mailto:contacto@arkaltd.io" class="nm">contacto@arkaltd.io</a>
+    <span class="nibc hide-mobile">IBC No. 2025-00568 · Santa Lucía</span>
+    <a href="mailto:contacto@arkaltd.io" class="nm hide-mobile">contacto@arkaltd.io</a>
   </div>
 </nav>
-
 <div class="pg">
 
 <!-- HERO -->
@@ -235,6 +246,17 @@ footer a{color:var(--m);text-decoration:none}
 </div>
 
 <!-- STEPS -->
+
+<!-- CROSS-NAV BAR -->
+<div class="cross-nav fade">
+  <a href="index.html" class="cross-btn">
+    <span class="cross-icon">📊</span>
+    <span class="cross-label-es">Simulador de Portafolio</span>
+    <span class="cross-label-en" style="display:none">Portfolio Simulator</span>
+    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+</div>
+
 <div class="steps d3 fade">
   <div class="sd active" id="d1"><div class="sn">01</div><span data-i="step1_lbl">Cuestionario</span></div>
   <div class="sl" id="l1"></div>
@@ -1111,6 +1133,8 @@ function setLang(l){
   lang=l;
   document.getElementById('btn-es').classList.toggle('active',l==='es');
   document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.querySelectorAll('.cross-label-es').forEach(el=>el.style.display=l==='es'?'':'none');
+  document.querySelectorAll('.cross-label-en').forEach(el=>el.style.display=l==='en'?'':'none');
   document.querySelectorAll('[data-i]').forEach(el=>{
     const k=el.getAttribute('data-i');
     if(T[l][k]!==undefined)el.innerHTML=T[l][k];
