@@ -51,6 +51,14 @@ body.light footer{border-color:var(--b1)}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--off);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 
+/* NAV TOOL BUTTON */
+.nav-tool-btn{display:flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--m);text-decoration:none;
+  background:var(--c2);border:1px solid var(--b1);border-radius:5px;padding:5px 10px;
+  transition:all .2s}
+.nav-tool-btn:hover{border-color:var(--tl);color:var(--tl);background:var(--td)}
+.nav-tool-btn svg{opacity:.7}
+
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
   backdrop-filter:blur(20px);border-bottom:1px solid var(--b1);height:60px;
@@ -214,6 +222,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
   cursor:pointer;border:none;background:transparent;color:var(--m);
   font-family:var(--sans);transition:all .15s}
 .curr-btn.active{background:var(--t);color:#fff}
+
+/* PRESET BUTTONS */
+.preset-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--b1);background:var(--c2);
+  color:var(--m);font-family:var(--sans);font-size:.68rem;font-weight:600;cursor:pointer;
+  transition:all .18s;letter-spacing:.04em}
+.preset-btn:hover{border-color:rgba(0,186,179,.4);color:var(--tl)}
+.preset-btn.active{background:var(--t);border-color:var(--t);color:#fff}
+
+/* ALLOCATION SLIDERS */
+.alloc-sliders{display:flex;flex-direction:column;gap:12px}
+.as-row{display:grid;grid-template-columns:160px 1fr 44px;align-items:center;gap:12px}
+.as-label{display:flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;color:var(--off)}
+.as-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.as-track-wrap{position:relative}
+.as-range{width:100%;height:4px;-webkit-appearance:none;appearance:none;
+  background:var(--b1);border-radius:4px;outline:none;cursor:pointer}
+.as-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;
+  border-radius:50%;background:var(--tl);cursor:pointer;border:2px solid var(--bg);
+  box-shadow:0 0 0 2px rgba(0,186,179,.3);transition:transform .15s}
+.as-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
+.as-val{font-size:.8rem;font-weight:700;color:var(--tl);text-align:right;min-width:36px}
+
+@media(max-width:640px){
+  .as-row{grid-template-columns:120px 1fr 40px;gap:8px}
+  .as-label{font-size:.68rem}
+}
 
 /* MODE BUTTONS */
 .mode-btn{display:flex;align-items:center;gap:10px;flex:1;
@@ -438,6 +472,10 @@ input[type=number]{-moz-appearance:textfield}
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
+    <a href="profiler.html" class="nav-tool-btn" title="Perfilador de Inversión">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      <span data-i="nav_profiler">Perfilador</span>
+    </a>
     <span class="nibc">IBC No. 2025-00568 · Santa Lucía</span>
     <a href="mailto:contacto@arkaltd.io" class="nm">contacto@arkaltd.io</a>
   </div>
@@ -491,24 +529,63 @@ input[type=number]{-moz-appearance:textfield}
   <div class="stit" data-i="s1_title">Parámetros de Simulación</div>
   <div class="ssub" data-i="s1_sub">Ajusta tu capital, horizonte y estrategia. El motor calcula rendimientos usando la tasa diaria real por días del mes.</div>
 
+
   <div style="margin-bottom:32px">
-    <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:14px" data-i="strat_title">Elige tu Estrategia ARKA</div>
-    <div class="sg">
-      <div class="sc" data-rate="0.18" onclick="pickS(this,.18,'Foundation')">
-        <div class="stag">ARKA Foundation</div>
-        <div class="sr">18%<span class="sa" data-i="per_year">/ año</span></div>
-        <div class="sd2" data-i="strat1_desc">Preservación de capital · Family Offices · Largo plazo · Control estricto de drawdown</div>
+    <div style="font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-bottom:14px" data-i="strat_title">Asignación de Capital</div>
+
+    <!-- PRESETS -->
+    <div style="font-size:.65rem;color:var(--m);margin-bottom:10px" data-i="preset_label">Presets de perfil</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px" id="presetBtns">
+      <button class="preset-btn" onclick="applyPreset(100,0,0,'Foundation')" data-i="p_conservative">Conservador</button>
+      <button class="preset-btn" onclick="applyPreset(60,30,10,'Moderado-Bajo')" data-i="p_modlow">Moderado-Bajo</button>
+      <button class="preset-btn active" onclick="applyPreset(30,50,20,'Moderado')" data-i="p_mod">Moderado</button>
+      <button class="preset-btn" onclick="applyPreset(20,30,50,'Moderado-Alto')" data-i="p_modhigh">Moderado-Alto</button>
+      <button class="preset-btn" onclick="applyPreset(10,20,70,'Agresivo')" data-i="p_aggressive">Agresivo</button>
+      <button class="preset-btn" onclick="applyPreset(0,0,100,'Alpha Force')" data-i="p_alpha">100% Alpha</button>
+    </div>
+
+    <!-- CUSTOM SLIDERS -->
+    <div style="font-size:.65rem;color:var(--m);margin-bottom:12px">
+      <span data-i="custom_label">Personalizar asignación</span>
+      <span id="allocTotal" style="float:right;font-weight:700;color:var(--tl)">100%</span>
+    </div>
+    <div class="alloc-sliders">
+      <div class="as-row">
+        <div class="as-label">
+          <span class="as-dot" style="background:#00BAB3"></span>
+          <span>Foundation <span style="color:var(--m);font-weight:300">18%</span></span>
+        </div>
+        <div class="as-track-wrap">
+          <input type="range" class="as-range" id="slF" min="0" max="100" step="5" value="30" oninput="updateAlloc()">
+        </div>
+        <span class="as-val" id="valF">30%</span>
       </div>
-      <div class="sc sel" data-rate="0.24" onclick="pickS(this,.24,'Strategic Growth')">
-        <div class="stag">ARKA Strategic Growth</div>
-        <div class="sr">24%<span class="sa" data-i="per_year">/ año</span></div>
-        <div class="sd2" data-i="strat2_desc">Apreciación activa · Multi-activo · Análisis macro + ejecución sistemática</div>
+      <div class="as-row">
+        <div class="as-label">
+          <span class="as-dot" style="background:#c8a85a"></span>
+          <span>Strategic Growth <span style="color:var(--m);font-weight:300">24%</span></span>
+        </div>
+        <div class="as-track-wrap">
+          <input type="range" class="as-range" id="slG" min="0" max="100" step="5" value="50" oninput="updateAlloc()">
+        </div>
+        <span class="as-val" id="valG">50%</span>
       </div>
-      <div class="sc" data-rate="0.36" onclick="pickS(this,.36,'Alpha Force')">
-        <div class="stag">ARKA Alpha Force</div>
-        <div class="sr">36%<span class="sa" data-i="per_year">/ año</span></div>
-        <div class="sd2" data-i="strat3_desc">Alpha cuantitativo puro · HNWI · Modelos algorítmicos avanzados</div>
+      <div class="as-row">
+        <div class="as-label">
+          <span class="as-dot" style="background:#e87070"></span>
+          <span>Alpha Force <span style="color:var(--m);font-weight:300">36%</span></span>
+        </div>
+        <div class="as-track-wrap">
+          <input type="range" class="as-range" id="slA" min="0" max="100" step="5" value="20" oninput="updateAlloc()">
+        </div>
+        <span class="as-val" id="valA">20%</span>
       </div>
+    </div>
+    <div id="allocWarn" style="display:none;font-size:.7rem;color:#e87070;margin-top:8px" data-i="alloc_warn">⚠️ La asignación debe sumar 100%</div>
+    <!-- Effective rate display -->
+    <div style="margin-top:14px;background:var(--c2);border:1px solid var(--b1);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:.72rem;color:var(--m)" data-i="eff_rate_label">Tasa efectiva ponderada</span>
+      <span id="effRate" style="font-size:1.1rem;font-weight:900;color:var(--tl)">22.8%</span>
     </div>
   </div>
 
@@ -704,7 +781,52 @@ input[type=number]{-moz-appearance:textfield}
 const SB_URL='https://fmycgssuqyrkpylccsut.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZteWNnc3N1cXlya3B5bGNjc3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MjUwNzYsImV4cCI6MjA5MDUwMTA3Nn0.8DNU139iE3RO_1qVabnBp2vJa673IU23y7LSzQVzFOA';
 // S&P 500: CAGR real últimos 20 años (2005-2024) = 10.2% (con dividendos reinvertidos)
 const BENCH={sp500:0.102,cetes:0.085,banco:0.05};
-let S={cap:50000,yrs:10,mo:500,rate:.24,name:'Strategic Growth',mode:'compound'};
+let S={cap:50000,yrs:10,mo:500,rate:.228,name:'Moderado',mode:'compound',
+  allocF:30,allocG:50,allocA:20};
+
+function calcEffRate(f,g,a){
+  return (f*0.18 + g*0.24 + a*0.36)/100;
+}
+
+function applyPreset(f,g,a,name){
+  document.getElementById('slF').value=f;
+  document.getElementById('slG').value=g;
+  document.getElementById('slA').value=a;
+  // Update active preset button
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  updateAlloc(name);
+}
+
+function updateAlloc(presetName){
+  const f=parseInt(document.getElementById('slF').value);
+  const g=parseInt(document.getElementById('slG').value);
+  const a=parseInt(document.getElementById('slA').value);
+  const total=f+g+a;
+  document.getElementById('valF').textContent=f+'%';
+  document.getElementById('valG').textContent=g+'%';
+  document.getElementById('valA').textContent=a+'%';
+  document.getElementById('allocTotal').textContent=total+'%';
+  document.getElementById('allocTotal').style.color=total===100?'var(--tl)':'#e87070';
+  document.getElementById('allocWarn').style.display=total!==100?'block':'none';
+  const eff=calcEffRate(f,g,a);
+  document.getElementById('effRate').textContent=(eff*100).toFixed(2)+'%';
+  // Update S
+  S.allocF=f; S.allocG=g; S.allocA=a;
+  S.rate=eff;
+  if(presetName) S.name=presetName;
+  else if(!presetName){
+    // Clear preset active if manual adjustment
+    if(total===100){
+      // Check if matches a preset
+      const presets=[[100,0,0],[60,30,10],[30,50,20],[20,30,50],[10,20,70],[0,0,100]];
+      const match=presets.some(([pf,pg,pa])=>pf===f&&pg===g&&pa===a);
+      if(!match) document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+    }
+  }
+  // Enable/disable calc button based on total
+  document.getElementById('calcBtn').disabled=total!==100;
+}
 let myChart=null,sb=null,R=null;
 
 window.addEventListener('DOMContentLoaded',()=>{
@@ -779,20 +901,44 @@ function runSim(){
   const btn=document.getElementById('calcBtn');
   const sp=document.getElementById('cSpin');
   const ic=document.getElementById('cIcon');
+  // Validate allocation sums to 100
+  const total=S.allocF+S.allocG+S.allocA;
+  if(total!==100){alert(lang==='en'?'Allocation must sum to 100%.':'La asignación debe sumar 100%.');return;}
   btn.disabled=true;sp.style.display='block';ic.style.display='none';
   setTimeout(()=>{
-    const{cap,yrs,mo,rate,name,mode}=S;
-    const growFn = mode==='simple' ? growSimple : growCompound;
-    const arka_d  = growFn(cap,mo,rate,yrs);
-    const sp_d    = growFn(cap,mo,BENCH.sp500,yrs);
-    const cetes_d = growFn(cap,mo,BENCH.cetes,yrs);
-    const banco_d = growFn(cap,mo,BENCH.banco,yrs);
+    const{cap,yrs,mo,rate,name,mode,allocF,allocG,allocA}=S;
+    // Mixed allocation: simulate each strategy separately then blend
+    const growFn=mode==='simple'?growSimple:growCompound;
+    // Weighted blended growth
+    function growMixed(cap,mo,yrs){
+      const yearly=[cap]; const monthly_arr=[cap];
+      let saldo=cap;
+      for(let m=1;m<=yrs*12;m++){
+        const mr_f=monthlyRate(0.18,m)*allocF/100;
+        const mr_g=monthlyRate(0.24,m)*allocG/100;
+        const mr_a=monthlyRate(0.36,m)*allocA/100;
+        const mr=mr_f+mr_g+mr_a;
+        if(mode==='compound'){
+          saldo=saldo*(1+mr)+mo;
+        } else {
+          const interes=cap*mr;
+          saldo=saldo+interes+mo;
+        }
+        monthly_arr.push(saldo);
+        if(m%12===0) yearly.push(saldo);
+      }
+      return{yearly,monthly:monthly_arr};
+    }
+    const arka_d=growMixed(cap,mo,yrs);
+    const sp_d=growFn(cap,mo,BENCH.sp500,yrs);
+    const cetes_d=growFn(cap,mo,BENCH.cetes,yrs);
+    const banco_d=growFn(cap,mo,BENCH.banco,yrs);
     R={
-      arka:   arka_d.yearly,   arka_mo:  arka_d.monthly,
-      sp500:  sp_d.yearly,
-      cetes:  cetes_d.yearly,
-      banco:  banco_d.yearly,
-      cap,yrs,mo,rate,name,mode
+      arka:arka_d.yearly, arka_mo:arka_d.monthly,
+      sp500:sp_d.yearly,
+      cetes:cetes_d.yearly,
+      banco:banco_d.yearly,
+      cap,yrs,mo,rate,name,mode,allocF,allocG,allocA
     };
     renderR();
     btn.disabled=false;sp.style.display='none';ic.style.display='';
@@ -808,8 +954,9 @@ function renderR(){
   const modeLabel=lang==='en'?(mode==='simple'?'Simple Interest':'Compound Interest'):(mode==='simple'?'Interés Simple':'Interés Compuesto');
 
   const cs=currSym();
+  const allocStr=`${R.allocF||100}% F · ${R.allocG||0}% SG · ${R.allocA||0}% AF`;
   document.getElementById('rT').textContent=`ARKA ${name} — ${yrs} ${lang==='en'?'years':'años'} · ${curr}`;
-  document.getElementById('rS').textContent=`${cs}${fC(cap)} + ${cs}${fC(mo)}/${lang==='en'?'mo':'mes'} · ${yrs} ${lang==='en'?'yrs':'años'} · ${(rate*100).toFixed(0)}% · ${modeLabel}`;
+  document.getElementById('rS').textContent=`${cs}${fC(cap)} + ${cs}${fC(mo)}/${lang==='en'?'mo':'mes'} · ${yrs} ${lang==='en'?'yrs':'años'} · ${(rate*100).toFixed(2)}% · ${allocStr} · ${modeLabel}`;
   document.getElementById('ctag').textContent=`${yrs} ${lang==='en'?'YRS':'AÑOS'}`;
 
   document.getElementById('resGrid').innerHTML=`
@@ -1276,6 +1423,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 const T = {
   es: {
     nav_sub:'Investment Simulator',
+    nav_profiler:'Profiler',
     hero_label:'Hedge Fund · Capital Institucional · Mercados Globales',
     hero_h1:'Alpha Fund',
     hero_h2:'Simulador de Portafolio',
@@ -1332,6 +1480,7 @@ const T = {
     gold_text_s:'Hedge fund institucional con modelos cuantitativos avanzados y ejecución sistemática en mercados globales.',
     gold_pill_s:'Proteger capital primero, retornos consistentes.',
     curr_title:'Moneda',
+    strat_title:'Asignación de Capital',preset_label:'Presets de perfil',custom_label:'Personalizar asignación',alloc_warn:'⚠️ La asignación debe sumar 100%',eff_rate_label:'Tasa efectiva ponderada',p_conservative:'Conservador',p_modlow:'Moderado-Bajo',p_mod:'Moderado',p_modhigh:'Moderado-Alto',p_aggressive:'Agresivo',p_alpha:'100% Alpha',
     mode_title:'Tipo de Interés',
     mode_compound:'Interés Compuesto',
     mode_compound_desc:'Los rendimientos se reinvierten mes a mes',
@@ -1344,6 +1493,7 @@ const T = {
   },
   en: {
     nav_sub:'Investment Simulator',
+    nav_profiler:'Profiler',
     hero_label:'Hedge Fund · Institutional Capital · Global Markets',
     hero_h1:'Alpha Fund',
     hero_h2:'Portfolio Simulator',
@@ -1400,6 +1550,7 @@ const T = {
     gold_text_s:'Institutional hedge fund with advanced quantitative models and systematic execution across global markets.',
     gold_pill_s:'Protect capital first, generate consistent returns.',
     curr_title:'Currency',
+    strat_title:'Capital Allocation',preset_label:'Profile Presets',custom_label:'Custom allocation',alloc_warn:'⚠️ Allocation must sum to 100%',eff_rate_label:'Weighted effective rate',p_conservative:'Conservative',p_modlow:'Moderate-Low',p_mod:'Moderate',p_modhigh:'Moderate-High',p_aggressive:'Aggressive',p_alpha:'100% Alpha',
     mode_title:'Interest Type',
     mode_compound:'Compound Interest',
     mode_compound_desc:'Returns reinvested every month',
