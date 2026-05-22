@@ -1108,9 +1108,13 @@ function drawChart(){
 }
 
 /* ── TELEGRAM ── */
-const TG_TOKEN='8482266610:AAF3GIUeLqCtt1Rp9hys8eIHZP_btXetNpA';
-const TG_CHATS=['188610921','-5125313014']; // personal + grupo ARKA Alpha Fund Leads
+// SEGURIDAD: El token de Telegram NO debe estar en el frontend (código público).
+// Mueve las notificaciones a un endpoint servidor o usa un webhook de Supabase.
+// Esta función es un no-op hasta que se implemente un proxy server-side.
+const TG_TOKEN=''; // eliminado — token revocado y NO debe re-exponerse aquí
+const TG_CHATS=['188610921','-5125313014'];
 async function sendTelegram(nm,em,wa,am,strat,cap,yrs,mo){
+  if(!TG_TOKEN) return; // deshabilitado hasta implementar proxy server-side
   const fecha=new Date().toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
   const txt=`🔔 *Nuevo Lead — ARKA Alpha Fund*\n\n👤 ${nm}\n📧 ${em}\n📱 ${wa}\n💰 ${am||'No especificado'}\n\n📊 *Estrategia:* ${strat}\n📈 Capital: $${f(cap)} · ${yrs} años · $${f(mo)}/mes\n\n🕐 ${fecha}`;
   for(const chat of TG_CHATS){
