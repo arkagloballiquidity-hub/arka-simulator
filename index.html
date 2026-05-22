@@ -1107,20 +1107,15 @@ function drawChart(){
   });
 }
 
-/* ── TELEGRAM ── */
-// SEGURIDAD: El token de Telegram NO debe estar en el frontend (código público).
-// Mueve las notificaciones a un endpoint servidor o usa un webhook de Supabase.
-// Esta función es un no-op hasta que se implemente un proxy server-side.
-const TG_TOKEN=''; // eliminado — token revocado y NO debe re-exponerse aquí
-const TG_CHATS=['188610921','-5125313014'];
+/* ── TELEGRAM ── proxy server-side (token en TELEGRAM_BOT_TOKEN Vercel env) */
 async function sendTelegram(nm,em,wa,am,strat,cap,yrs,mo){
-  if(!TG_TOKEN) return; // deshabilitado hasta implementar proxy server-side
-  const fecha=new Date().toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
-  const txt=`🔔 *Nuevo Lead — ARKA Alpha Fund*\n\n👤 ${nm}\n📧 ${em}\n📱 ${wa}\n💰 ${am||'No especificado'}\n\n📊 *Estrategia:* ${strat}\n📈 Capital: $${f(cap)} · ${yrs} años · $${f(mo)}/mes\n\n🕐 ${fecha}`;
-  for(const chat of TG_CHATS){
-    try{await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat,text:txt,parse_mode:'Markdown'})});}
-    catch(e){console.warn('TG:',e);}
-  }
+  try{
+    await fetch('/api/send-telegram',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:nm,email:em,whatsapp:wa,amount:am,strategy:strat,capital:cap,years:yrs,monthly:mo}),
+    });
+  }catch(e){console.warn('TG proxy:',e);}
 }
 
 async function handleLead(){
