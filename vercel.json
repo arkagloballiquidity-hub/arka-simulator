@@ -1,15 +1,4 @@
 {
-  "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" },
-    { "src": "*.html", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/profiler", "dest": "/profiler.html" },
-    { "src": "/profiler.html", "dest": "/profiler.html" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -22,5 +11,10 @@
         { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; object-src 'none'; frame-ancestors 'none'" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/profiler", "destination": "/profiler.html" },
+    { "source": "/", "destination": "/index.html" }
   ]
 }
