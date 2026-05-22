@@ -1129,11 +1129,12 @@ async function handleLead(){
   const btn=document.getElementById('dlBtn'),sp=document.getElementById('dSpin'),ic=document.getElementById('dIcon');
   btn.disabled=true;sp.style.display='block';ic.style.display='none';
   // Guardar en Supabase
-  try{
-    if(sb)await sb.from('leads').upsert({name:nm,email:em,whatsapp:wa,amount_range:am,
+  if(sb){
+    const{error:_le}=await sb.from('leads').upsert({name:nm,email:em,whatsapp:wa,amount_range:am,
       strategy:S.name,capital:S.cap,years:S.yrs,monthly:S.mo,
       created_at:new Date().toISOString()},{onConflict:'email'});
-  }catch(e){console.warn(e);}
+    if(_le)console.error('Leads error:',_le.code,_le.message,_le.details,_le.hint);
+  }
   // Notificar a Telegram
   await sendTelegram(nm,em,wa,am,`ARKA ${S.name} ${(S.rate*100).toFixed(0)}%`,S.cap,S.yrs,S.mo);
   let pdfB64=null;
