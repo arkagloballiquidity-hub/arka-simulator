@@ -96,9 +96,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 function corsHeaders(origin: string | null) {
-  const allowed = origin && ALLOWED_ORIGINS.some(o =>
-    origin === o || origin.endsWith(".vercel.app") || origin.endsWith(".arkaglobalinvestments.com")
-  ) ? origin : ALLOWED_ORIGINS[0];
+  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     "Access-Control-Allow-Origin": allowed,
     "Access-Control-Allow-Headers": "authorization, content-type",
